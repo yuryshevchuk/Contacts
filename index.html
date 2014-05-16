@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Contacts</title>
+	<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+	<script type="text/javascript" src="https://code.angularjs.org/1.2.16/angular-route.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+</head>
+<body ng-view>
+<div class="container-fluid">
+	<nav class="navbar navbar-default" role="navigation">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Contacts</a>
+	    </div>
+	       <ul class="nav navbar-nav navbar-right">
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Yury Shevchuk<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="">Log Out</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	  </div>
+	</nav>
+	<div class="container-fluid">
+		{{content}}
+	</div>
+</div>
+</body>
+</html>
