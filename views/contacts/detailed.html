@@ -1,0 +1,15 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2">
+			<img ng-src="images/empty.jpg" class="img-rounded">
+		</div>
+		<div class="col-md-10">
+			<h1>{{detailedContact.entry.title.$t}}</h1>
+			<br>
+			<h3 ng-repeat="email in detailedContact.entry.gd$email">{{email.address}}</h3>
+			<ul>
+				<li ng-repeat="phone in detailedContact.entry.gd$phoneNumber">{{phone.$t}}</li>
+			</ul>
+		</div>
+	</div>
+</div>

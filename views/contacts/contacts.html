@@ -1,0 +1,39 @@
+<ul class="nav nav-pills">
+	<li><a href="">Select All</a></li>
+	<li><a href="">Add new</a></li>
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="">More...<b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><a href="">Sort contacts by...</a></li>
+				<li><a href="">Delete contacts</a></li>
+			</ul>
+	</li>
+</ul>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Contact names:</th>
+			<th>E-mails:</th>
+			<th>Phone numbers:</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="contact in contacts.feed.entry">
+			<td>
+				<input type="checkbox">
+				<a href="#/contacts/{{contact.id.$t | leaveOnlyId}}">{{contact.title.$t}}</a>
+			</td>
+			<td><div ng-repeat="email in contact.gd$email">{{email.address}}</div></td>
+			<td><div class="inline-block" ng-repeat="phone in contact.gd$phoneNumber"><div class="divider">{{phone.$t}}</div></div></td>
+		</tr>
+	</tbody>
+</table>
+<ul class="pagination">
+  <li><a href="">&laquo;</a></li>
+  <li><a href="">1</a></li>
+  <li><a href="">2</a></li>
+  <li><a href="">3</a></li>
+  <li><a href="">4</a></li>
+  <li><a href="">5</a></li>
+  <li><a href="">&raquo;</a></li>
+</ul>

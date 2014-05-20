@@ -1,4 +1,3 @@
-app.factory("googleResource", ["$resource", "auth", function($resource, auth){
-	return $resource("https://www.googleapis.com/plus/v1/people/me");
-	}
-}]);
+app.factory("googleUserResource", function($resource){
+	return $resource("https://www.googleapis.com/plus/v1/people/:user_id", {user_id: '@id'});
+});

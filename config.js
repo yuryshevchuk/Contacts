@@ -1,22 +1,24 @@
-app.config(function($routeProvider, $resourceProvider, authProvider){
+app.config(function($routeProvider, $resourceProvider, authProvider, $httpProvider){
 	$routeProvider
 	.when("/", {
+		templateUrl: "index.html",
 		redirectTo: "/contacts"
 	})
 	.when("/contacts", {
-		templateUrl: "index.html"
-
-	})
-	.otherwise({
-		redirectTo: "/contacts/all",
-		templateUrl: "index.html",
+		templateUrl: "views/contacts/contacts.html",
 		controller: "ContactsCtrl"
 	})
-
+	.when("/contacts/:user_id", {
+		templateUrl: "views/contacts/detailed.html",
+		controller: "detailedContactCtrl"
+	})
+	.otherwise({
+		redirectTo: "/contacts",
+	})
 	authProvider.config({
-		scope: ["email", "profile"],
+		scope: ["email", "profile","https://www.google.com/m8/feeds"],
 		redirect_uri: "http://localhost:4567/",
 		client_id: "1003842577916-fpin2mov4dtuhthts5qa2rp8vicobp10.apps.googleusercontent.com"
 	});
-	
+	$httpProvider.defaults.headers.common['GData-Version'] = '3.0';
 });
