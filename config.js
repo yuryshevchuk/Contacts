@@ -2,9 +2,9 @@ app.config(function($routeProvider, $resourceProvider, authProvider, $httpProvid
 	$routeProvider
 	.when("/", {
 		templateUrl: "index.html",
-		redirectTo: "/contacts"
+		redirectTo: "/contacts/page/1"
 	})
-	.when("/contacts", {
+	.when("/contacts/page/:page", {
 		templateUrl: "views/contacts/contacts.html",
 		controller: "ContactsCtrl"
 	})
@@ -13,7 +13,7 @@ app.config(function($routeProvider, $resourceProvider, authProvider, $httpProvid
 		controller: "detailedContactCtrl"
 	})
 	.otherwise({
-		redirectTo: "/contacts",
+		redirectTo: "/contacts/page/1",
 	})
 	authProvider.config({
 		scope: ["email", "profile","https://www.google.com/m8/feeds"],
