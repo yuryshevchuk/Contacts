@@ -1,15 +1,41 @@
 <div class="container-fluid">
-	<div class="row">
+	<div class="segment row">
 		<div class="col-md-2">
 			<img ng-src="images/empty.jpg" class="img-rounded">
 		</div>
-		<div class="col-md-10">
+		<div class="col-md-4">
 			<h1>{{detailedContact.entry.title.$t}}</h1>
 			<br>
+			<span class="label label-info">my group</span>
+			<br>
 			<h3 ng-repeat="email in detailedContact.entry.gd$email">{{email.address}}</h3>
-			<ul>
+			<ul class="contactPhones">
 				<li ng-repeat="phone in detailedContact.entry.gd$phoneNumber">{{phone.$t}}</li>
 			</ul>
+		</div>
+		<div class="col-md-6 connectionsField">
+			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/googleSmall.png"><strong>Google+:</strong> not connected</div>
+			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/twitterSmall.png"><strong>Twitter:</strong> not connected</div>
+			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/instagramSmall.png"><strong>Instagram:</strong> not connected</div>
+		</div>
+	</div>
+	<div class="segment row">
+		<div class="col-md-5 col-md-offset-1">
+			<div class="contactInputField row">
+				<div class="col-xs-4">
+					<label class="contactInfoLabel">Post:</label>
+					<label class="contactInfoLabel">Birthday:</label>
+					<label class="contactInfoLabel">URL:</label>
+				</div>
+				<div class="col-xs-7 col-sm-5 col-md-7 col-lg-6">
+					<input class='contactInfo' type="text">
+					<input class='contactInfo' type="text">
+					<input class='contactInfo' type="text">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<textarea type="text" class="bigNote" placeholder="Add a note"></textarea>
 		</div>
 	</div>
 </div>

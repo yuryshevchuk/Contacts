@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Contacts</title>
 	<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -12,14 +13,19 @@
 	<script type="text/javascript" src="https://code.angularjs.org/1.2.16/angular-resource.min.js"></script>
 	<script type="text/javascript" src="filters/filters.js"></script>
 	<script type="text/javascript" src="filters/leaveOnlyId.js"></script>
+	<script type="text/javascript" src="directives/scroll.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 	<script type="text/javascript" src="providers/authProvider.js"></script>
 	<script type="text/javascript" src="config.js"></script>
 	<script type="text/javascript" src="factories/googleResource.js"></script>
 	<script type="text/javascript" src="factories/userContactsResource.js"></script>
+	<script type="text/javascript" src="factories/userPhotoResource.js"></script>
+	<script type="text/javascript" src="factories/userGroupsResource.js"></script>
+	<script type="text/javascript" src="factories/logout.js"></script>
 	<script type="text/javascript" src="controllers/contactsCtrl.js"></script>
 	<script type="text/javascript" src="controllers/detailedContactCtrl.js"></script>
 	<script type="text/javascript" src="directives/pagination.js"></script>
+	<script type="text/javascript" src="controllers/logCtrl.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -32,7 +38,7 @@
 	        <li class="dropdown">
 	          <a href="" class="dropdown-toggle" data-toggle="dropdown"><img ng-src="{{user.image?user.image.url:'images/empty50.jpg'}}" class="img-rounded"> {{user.name.givenName}} {{user.name.familyName}}<b class="caret"></b></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="">Log Out</a></li>
+	            <li><a href="#/loggedout" ng-click="logout.get()">Log Out</a></li>
 	          </ul>
 	        </li>
 	      </ul>

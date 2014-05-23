@@ -1,8 +1,8 @@
 <ul class="nav nav-pills">
-	<li><a href="">Select All</a></li>
-	<li><a href="">Add new</a></li>
+	<li><a href=""><i class="fa fa-check-square-o fa-3x"></i></a></li>
+	<li><a href=""><i class="fa fa-plus fa-3x"></i></a></li>
 	<li class="dropdown">
-		<a class="dropdown-toggle" data-toggle="dropdown" href="">More...<b class="caret"></b></a>
+		<a class="dropdown-toggle" data-toggle="dropdown" href=""><i class="fa fa-cogs fa-3x"></i><b class="caret"></b></a>
 			<ul class="nav dropdown-menu">
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Sort contacts by...</a></li>
 					<ul class="dropdown-menu">
@@ -12,28 +12,24 @@
 				<li><a href="">Delete contacts</a></li>
 			</ul>
 	</li>
-	<li><input type="text" placeholder="filter"></li>
+	<!-- <li><input type="text" placeholder="filter"></li> -->
+	<pagination class="myPaginate" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page="contacts.feed.openSearch$itemsPerPage.$t"></pagination>
 </ul>
 
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th>Contact names:</th>
-			<th>E-mails:</th>
-			<th>Phone numbers:</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="contact in contacts.feed.entry" ng-href="#/contacts/{{contact.id.$t | leaveOnlyId}}">
-			<td>
-				<input type="checkbox">
-				<a class="item" href="#/contacts/{{contact.id.$t | leaveOnlyId}}">{{contact.title.$t}}</a>
-			</td>
-			<td><div ng-repeat="email in contact.gd$email">{{email.address}}</div></td>
-			<td><div class="inline-block" ng-repeat="phone in contact.gd$phoneNumber"><div class="divider">{{phone.$t}}</div></div></td>
-		</tr>
-	</tbody>
-	<pagination totalitems="contacts.feed.openSearch$totalResults.$t" itemsperpage="contacts.feed.openSearch$itemsPerPage.$t" startindex="contacts.feed.openSearch$startIndex.$t">
-	</pagination>
-</table>
-
+<div class="list container-fluid">
+	<div class="listHeader listRow row disabledOn576width">
+		<div class="col-sm-4 col-xs-5 listTitle">Contact Name:</div>
+		<div class="col-sm-3 col-xs-3 listTitle">E-mail:</div>
+		<div class="col-sm-5 col-xs-4 listTitle">Phone number:</div>
+	</div>
+	<div class="listBody container-fluid" id="fixed" when-scrolled="loadMore()">
+		<div ng-repeat="contact in contacts.feed.entry" class="listRow row">
+			<a class="displayBlock" href="#/contacts/{{contact.id.$t | leaveOnlyId}}">
+				<div class="listName col-sm-4 col-xs-4"><input class="disabledOn576width" id="user-name" type="checkbox"><label for="user-name">{{contact.title.$t}}</label></div>
+				<div class="listEmail col-sm-3 col-xs-4"><div ng-repeat="email in contact.gd$email">{{email.address}}</div></div>
+				<div class="listPhone col-sm-4 col-xs-4"><div class="phone inline-block" ng-repeat="phone in contact.gd$phoneNumber">{{phone.$t}}</div></div>
+				<div class="listGroups col-sm-1 disabledOn1080width"><span class="label label-info">my group</span></div>
+			</a>
+		</div>
+	</div>
+</div>

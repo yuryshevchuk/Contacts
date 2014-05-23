@@ -1,12 +1,25 @@
 a {
-	color: #545454
+	color:#545454;
 }
 a:hover {
 	color: #545454;
 	text-decoration: none;
 }
+.navbar-brand {
+	padding: 40px;
+	font-size: 94px;
+}
+/*#fixed {
+    height: 600px;
+    overflow: auto;
+    border: 1px solid blue;
+}*/
 .inline-block{
 	display: inline-block;
+}
+.myPaginate{
+	float: right;
+	margin-top: 10px;
 }
 .divider {
 	height: 80%;
@@ -14,6 +27,146 @@ a:hover {
 	margin-left: 15px;
 	padding-left: 5px;
 }
-input[type="text"]{
+ul.pagination{
+	margin: 4px 0px 15px 0px;
+}
+ul.nav {
+	margin-bottom: 30px;
+}
+.displayBlock{
+	display: block;
+	width: 100%;
+}
+.listRow{
+	border-bottom: 1px solid #D4D4D4;
+}
+.listRow > a {
+	float: left;
+}
+.listRow > a:hover{
+	background-color: #E8E8E8;
+}
+.listName .listEmail .listPhone {
+
+}
+.listHeader{
+	padding-bottom: 15px;
+	height: 30px;
+}
+.listTitle{
+	font-size: 18px;
+	font-weight: 800;
+}
+.listName {
+	color: black;
+}
+.listEmail {
+	color: #8C8C8C;
+}
+.listPhone{
+	color: #8C8C8C;
+}
+.phone{
+	padding-left: 20px;
+}
+.listRow > a {
+	padding-top: 3px;
+}
+#user-name{
+	position: relative;
+	top: 2px;
+	margin-right: 10px;
+}
+label[for="user-name"]{
+	font-weight: 400;
+	cursor: pointer;
+}
+input[type=text]{
 	margin-top: 7px;
+}
+.connectionsField{
+	border-left: 1px solid #D4D4D4;
+}
+.connectionsAvailable{
+	padding: 8px;
+	color: black;
+	font-size: 15px;
+}
+.socNetImage{
+	padding: 7px;
+}
+.segment{
+	padding-bottom: 50px;
+	padding-top: 25px;
+	margin: 20px;
+	border-bottom: 1px dotted grey;
+}
+.segment:last-child{
+	border-bottom: none;
+}
+label.contactInfoLabel{
+	width: 100%;
+	text-align: right;
+	font-weight: 400;
+	padding: 8px 0px 0px 0px;
+}
+.contactInfo{
+	width: 100%;
+}
+.bigNote{
+	width: 100%;
+	min-height: 150px;
+	resize: none;
+}
+textarea::-webkit-input-placeholder{
+	color: #D4D4D4;
+}
+.contactInputField{
+	padding-bottom: 50px;
+}
+.contactPhones{
+	padding-top: 15px;
+}
+@media screen and (max-width: 1080px) {
+	.disabledOn1080width {
+		display: none;
+	}
+}
+@media screen and (max-width: 768px) {
+	.disabledOn768width {
+		display: none;
+	}
+	.navbar-brand {
+		padding: 22px;
+		font-size: 38px;
+	}
+	.myPaginate {
+		float: left;
+	}
+}
+@media screen and (max-width: 576px) {
+	.container-fluid{
+		padding-left: 7px;
+		padding-right: 7px;
+	}
+	.disabledOn576width {
+		display: none;
+	}
+	label[for="user-name"]{
+		font-size: 23px;
+	}
+	.listName{
+		width: 100%;
+	}
+	.listEmail{
+		width: 100%;
+		margin-left: 20px;
+	}
+	.listPhone{
+		width: 100%;
+	}
+	.listRow > a {
+		height: 100px;
+		overflow: hidden;
+	}
 }
