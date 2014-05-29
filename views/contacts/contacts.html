@@ -1,19 +1,24 @@
 <ul class="nav nav-pills">
-	<li><a href=""><i class="fa fa-check-square-o fa-3x"></i></a></li>
-	<li><a href=""><i class="fa fa-plus fa-3x"></i></a></li>
-	<li class="dropdown">
-		<a class="dropdown-toggle" data-toggle="dropdown" href=""><i class="fa fa-cogs fa-3x"></i><b class="caret"></b></a>
-			<ul class="nav dropdown-menu">
-				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Sort contacts by...</a></li>
-					<ul class="dropdown-menu">
-						<li><a href="">..name</a></li>
-						<li><a href="">..phone number</a></li>
-					</ul>
-				<li><a href="">Delete contacts</a></li>
-			</ul>
-	</li>
-	<!-- <li><input type="text" placeholder="filter"></li> -->
-	<pagination class="myPaginate" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page="contacts.feed.openSearch$itemsPerPage.$t"></pagination>
+	<li><a href=""><i class="fa fa-check-square-o"></i></a></li>
+	<li><a href=""><i class="fa fa-plus"></i></a></li>
+	<li><a href=""><i class="fa fa-sort-amount-desc"></i></a></li>
+	<li ng-show="selectedContacts.length" ng-click="deleteContacts()"><a href=""><i class="fa fa-trash-o"></i></a></li>
+	<input type="text" placeholder="filter..." ng-model="filter['q']">
+	<paginate class="myPaginate" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page="contacts.feed.openSearch$itemsPerPage.$t" current-page="filter['page']"></paginate>
+</ul>
+
+<ul class="nav nav-tabs groupTabs">
+<li ng-class="{active: !filter.group}" ng-click="filterByGroup()"><a href="">All contacts</a></li>
+<li ng-class="{active: group.id == filter.group, dropdown: !group.isSystem}" ng-repeat="group in groups" ng-click="filterByGroup(group.id);" dropdown>
+	<a href="">{{group.title}}
+		<button class="btn-link dropdown-toggle" ng-hide="group.isSystem" ng-click="$event.stopPropagation()"><b class="caret"></b></button>
+  	</a>
+  	<ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation()">
+        <li group-name-modal title="Edit existing group" group-name="group.title" save-callback="saveGroup"><a href="">Edit group</a></li>
+        <li><a href="">Delete group</a></li>
+    </ul>
+</li>
+<li group-name-modal title="Add new group" class="addButton"><a href="">+</a></li>
 </ul>
 
 <div class="list container-fluid">
@@ -22,14 +27,16 @@
 		<div class="col-sm-3 col-xs-3 listTitle">E-mail:</div>
 		<div class="col-sm-5 col-xs-4 listTitle">Phone number:</div>
 	</div>
-	<div class="listBody container-fluid" id="fixed" when-scrolled="loadMore()">
+	<div class="listBody container-fluid" ng-click="$event.stopPropagation()">
 		<div ng-repeat="contact in contacts.feed.entry" class="listRow row">
 			<a class="displayBlock" href="#/contacts/{{contact.id.$t | leaveOnlyId}}">
-				<div class="listName col-sm-4 col-xs-4"><input class="disabledOn576width" id="user-name" type="checkbox"><label for="user-name">{{contact.title.$t}}</label></div>
+				<div class="listName col-sm-4 col-xs-4"><input class="userName disabledOn576width" id="contact{{contact.id.$t | leaveOnlyId}}" type="checkbox" ng-model="contact.isChecked" ng-change="onSelectContactCallback($index)">{{contact.title.$t}}</div>
 				<div class="listEmail col-sm-3 col-xs-4"><div ng-repeat="email in contact.gd$email">{{email.address}}</div></div>
-				<div class="listPhone col-sm-4 col-xs-4"><div class="phone inline-block" ng-repeat="phone in contact.gd$phoneNumber">{{phone.$t}}</div></div>
-				<div class="listGroups col-sm-1 disabledOn1080width"><span class="label label-info">my group</span></div>
+				<div class="listPhone col-sm-3 col-xs-4"><div class="phone inline-block" ng-repeat="phone in contact.gd$phoneNumber">{{phone.$t}}</div></div>
+				<div class="listGroups col-sm-2 disabledOn1080width"><span class="label label-info groupLabel" ng-repeat="group in contact.gContact$groupMembershipInfo">{{getGroupTitle(group.href)}}</span></div>
 			</a>
 		</div>
 	</div>
 </div>
+
+<!-- <label class="userNameLabel"for="user-name{{$index}}">{{contact.title.$t}}</label> -->

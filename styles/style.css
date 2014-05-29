@@ -6,8 +6,8 @@ a:hover {
 	text-decoration: none;
 }
 .navbar-brand {
-	padding: 40px;
-	font-size: 94px;
+	padding: 30px;
+	font-size: 24px;
 }
 /*#fixed {
     height: 600px;
@@ -21,34 +21,63 @@ a:hover {
 	float: right;
 	margin-top: 10px;
 }
+.groupTabs > li > a > button.btn-link {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border: none;
+}
+.groupTabs > li.open>a {
+	background-color: white;
+	border: 1px solid #eee;
+}
+.groupTabs > li > a.groupTitle {
+	padding-right: 6px;
+}
+.groupTabs > li.open>a:hover {
+	border: 1px solid #eee
+}
 .divider {
 	height: 80%;
 	border-left: 2px dotted grey;
 	margin-left: 15px;
 	padding-left: 5px;
 }
-ul.pagination{
-	margin: 4px 0px 15px 0px;
+li.logMenuSmallRes {
+	display: none;
 }
-ul.nav {
-	margin-bottom: 30px;
+ul.pagination{
+	margin: 0px;
+}
+.pagination>li>a {
+	padding: 1px 8px;
+	color: #545454;
+}
+.pagination>.active>a {
+	background-color: #545454;
+	border-color: #545454;
 }
 .displayBlock{
 	display: block;
 	width: 100%;
+}
+.lastToolbarPoint {
+	margin-right: 30px;
+}
+.list {
+	padding-top: 20px;
 }
 .listRow{
 	border-bottom: 1px solid #D4D4D4;
 }
 .listRow > a {
 	float: left;
+	padding-top: 1px
+	padding-bottom: 2px;
 }
 .listRow > a:hover{
 	background-color: #E8E8E8;
 }
-.listName .listEmail .listPhone {
 
-}
 .listHeader{
 	padding-bottom: 15px;
 	height: 30px;
@@ -67,22 +96,23 @@ ul.nav {
 	color: #8C8C8C;
 }
 .phone{
-	padding-left: 20px;
+	padding-right: 20px;
 }
-.listRow > a {
-	padding-top: 3px;
+.groupLabel {
+	margin-right: 14px;
 }
-#user-name{
+input.userName{
 	position: relative;
-	top: 2px;
 	margin-right: 10px;
+	top: 2px;
 }
-label[for="user-name"]{
+label.userNameLabel{
 	font-weight: 400;
 	cursor: pointer;
 }
 input[type=text]{
 	margin-top: 7px;
+	margin-left: 30px;
 }
 .connectionsField{
 	border-left: 1px solid #D4D4D4;
@@ -127,6 +157,55 @@ textarea::-webkit-input-placeholder{
 .contactPhones{
 	padding-top: 15px;
 }
+li.addButton > a{
+	font-size: 21px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	/*border-top: 1px solid #5bc0de;
+	border-left: 1px solid #5bc0de;
+	border-right: 1px solid #5bc0de;*/
+}
+
+li > a.groupName {
+
+}
+li > a.groupCaret {
+	position: absolute;
+	width: 17px;
+	padding: 11px 0px 9px 2px;
+	margin: 0px;
+	top: 0px;
+}
+.nav-tabs>li.active>a.groupCaret {
+	border-right: none;
+}
+input.modalInput {
+	margin: 0px;
+	width: 100%;
+}
+.modal-footer{
+	padding: 10px 12px 12px;
+	margin: 0px;
+}
+.modal-header{
+	padding: 10px;
+}
+.modal-body{
+	padding: 12px;
+}
+.modal-dialog{
+	margin: 190px auto;
+}
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 1080px) {
 	.disabledOn1080width {
 		display: none;
@@ -136,12 +215,33 @@ textarea::-webkit-input-placeholder{
 	.disabledOn768width {
 		display: none;
 	}
-	.navbar-brand {
-		padding: 22px;
-		font-size: 38px;
+	li.disabledOn768width {
+		display: none;
 	}
 	.myPaginate {
 		float: left;
+	}
+	li.logMenuSmallRes {
+		display: block;
+		float: right;
+		padding-right: 15px;
+	}
+	#logMenu {
+		position: absolute;
+		width: 100%;
+		top: 3px;
+		margin: 0px;
+		right: -15px;
+	}
+	.navbar-brand {
+		padding: 17px;
+	}
+	#section > li > a {
+		background-color: grey;
+		color: white;
+	}
+	.logMenuSmallRes > a {
+		float: right;
 	}
 }
 @media screen and (max-width: 576px) {
@@ -152,7 +252,7 @@ textarea::-webkit-input-placeholder{
 	.disabledOn576width {
 		display: none;
 	}
-	label[for="user-name"]{
+	label.userNameLabel{
 		font-size: 23px;
 	}
 	.listName{
@@ -160,7 +260,7 @@ textarea::-webkit-input-placeholder{
 	}
 	.listEmail{
 		width: 100%;
-		margin-left: 20px;
+		margin: 0px 0px 10px 0px;
 	}
 	.listPhone{
 		width: 100%;
@@ -168,5 +268,9 @@ textarea::-webkit-input-placeholder{
 	.listRow > a {
 		height: 100px;
 		overflow: hidden;
+	}
+	.phone {
+		margin: 0px 20px 0px 0px;
+		padding: 0px;
 	}
 }

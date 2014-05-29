@@ -6,14 +6,14 @@
 		<div class="col-md-4">
 			<h1>{{detailedContact.entry.title.$t}}</h1>
 			<br>
-			<span class="label label-info">my group</span>
+			<span class="label label-info groupLabel" ng-repeat="group in detailedContact.entry.gContact$groupMembershipInfo">{{getGroupTitle(group.href)}}</span>
 			<br>
 			<h3 ng-repeat="email in detailedContact.entry.gd$email">{{email.address}}</h3>
 			<ul class="contactPhones">
 				<li ng-repeat="phone in detailedContact.entry.gd$phoneNumber">{{phone.$t}}</li>
 			</ul>
 		</div>
-		<div class="col-md-6 connectionsField">
+		<div class="col-md-6 connectionsField disabledOn576width">
 			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/googleSmall.png"><strong>Google+:</strong> not connected</div>
 			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/twitterSmall.png"><strong>Twitter:</strong> not connected</div>
 			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/instagramSmall.png"><strong>Instagram:</strong> not connected</div>

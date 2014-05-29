@@ -2,11 +2,12 @@ app.config(function($routeProvider, $resourceProvider, authProvider, $httpProvid
 	$routeProvider
 	.when("/", {
 		templateUrl: "index.html",
-		redirectTo: "/contacts/page/1"
+		redirectTo: "/contacts"
 	})
-	.when("/contacts/page/:page", {
+	.when("/contacts", {
 		templateUrl: "views/contacts/contacts.html",
-		controller: "ContactsCtrl"
+		controller: "ContactsCtrl",
+		reloadOnSearch: false
 	})
 	.when("/contacts/:user_id", {
 		templateUrl: "views/contacts/detailed.html",
@@ -16,9 +17,7 @@ app.config(function($routeProvider, $resourceProvider, authProvider, $httpProvid
 		template: "<h2>You are not loged anymore</h2><a href='#/contacts/page/1' class='btn btn-info'>Log In</a>",
 		controller: "logCtrl"
 	})
-	.otherwise({
-		redirectTo: "#/contacts/page/1",
-	})
+
 	authProvider.config({
 		scope: ["email", "profile","https://www.google.com/m8/feeds"],
 		redirect_uri: "http://localhost:4567/",
@@ -26,4 +25,4 @@ app.config(function($routeProvider, $resourceProvider, authProvider, $httpProvid
 	});
 	$httpProvider.defaults.headers.common['GData-Version'] = '3.0';
 });
-app.value("numberOfNotesOnThePage", '20');
+app.value("numberOfNotesOnThePage", '30');
