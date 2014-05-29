@@ -2,7 +2,7 @@
 	<li><a href=""><i class="fa fa-check-square-o"></i></a></li>
 	<li><a href=""><i class="fa fa-plus"></i></a></li>
 	<li><a href=""><i class="fa fa-sort-amount-desc"></i></a></li>
-	<li ng-show="selectedContacts.length" ng-click="deleteContacts()"><a href=""><i class="fa fa-trash-o"></i></a></li>
+	<li ng-show="isSomeContactsSelected()" ng-click="deleteContacts()"><a href=""><i class="fa fa-trash-o"></i></a></li>
 	<input type="text" placeholder="filter..." ng-model="filter['q']">
 	<paginate class="myPaginate" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page="contacts.feed.openSearch$itemsPerPage.$t" current-page="filter['page']"></paginate>
 </ul>
@@ -15,7 +15,7 @@
   	</a>
   	<ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation()">
         <li group-name-modal title="Edit existing group" group-name="group.title" save-callback="saveGroup"><a href="">Edit group</a></li>
-        <li><a href="">Delete group</a></li>
+        <li ng-click="deleteGroups(group.id)"><a href="">Delete group</a></li>
     </ul>
 </li>
 <li group-name-modal title="Add new group" class="addButton"><a href="">+</a></li>

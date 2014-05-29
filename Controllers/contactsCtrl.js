@@ -11,7 +11,8 @@ angular.module("app").controller("ContactsCtrl", function($http, $scope, $locati
 			$scope.groups[value.id.$t] = {
 				title: value.title.$t,
 				id: value.id.$t,
-				isSystem: false
+				isSystem: false,
+				etag: value.gd$etag
 			}
 			if (value.gContact$systemGroup) {
 				$scope.groups[value.id.$t].title = value.title.$t.substring(14);
@@ -42,7 +43,8 @@ angular.module("app").controller("ContactsCtrl", function($http, $scope, $locati
 		if (contact.isChecked) {
 			$scope.selectedContacts[index] = contact.id.$t;
 		} else {
-			$scope.selectedContacts = $scope.selectedContacts.filter(function(item){return item != contact.id.$t});
+			delete $scope.selectedContacts[index];
+			//$scope.selectedContacts = $scope.selectedContacts.filter(function(item){return item != contact.id.$t});
 		}
 	}
 	$scope.reloadContacts = function (newVal){
@@ -65,18 +67,32 @@ angular.module("app").controller("ContactsCtrl", function($http, $scope, $locati
 	}
 
 	$scope.deleteContacts = function () {
-		console.log('start deleting....', $scope.selectedContacts);
-		
+		console.log('start deleting contacts....', $scope.selectedContacts);
 		angular.forEach($scope.selectedContacts, function(id, index){
+			$http.defaults.headers.common['If-match'] = $scope.contacts.feed.entry[index].gd$etag;
 			id = id.split('/');
 			id = id[id.length - 1];
-			$http.defaults.headers.common['If-match'] = $scope.contacts.feed.entry[index].gd$etag;
 			userContactsResource.delete({user_email: "default", user_id: id})
-			delete id;
-			console.log($scope.selectedContacts)
 		})
+			delete $http.defaults.headers.common['If-match'];
+			//$http.defaults.headers.common['If-match'] = $scope.contacts.feed.gd$etag;
+			$scope.reloadContacts();
 	}
 
+	$scope.deleteGroups = function (id) {
+		$http.defaults.headers.common['If-match'] = $scope.groups[id].etag;
+		shortId = id.split('/');
+		shortId = shortId[shortId.length - 1];
+		userGroupsResource.delete({user_email: "default", user_id: shortId});
+		delete $http.defaults.headers.common['If-match'];
+		delete $scope.groups[id];
+	}
+	$scope.isSomeContactsSelected = function () {
+		return Object.keys($scope.selectedContacts).length
+	}
 
 	$scope.reloadContacts();
 });
+
+
+// testContact1, testContact2, testContact3, testContact4, testContact5, testContact6, testContact7, testContact8, testContact9, testContact10
