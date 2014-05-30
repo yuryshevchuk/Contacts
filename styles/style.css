@@ -196,6 +196,30 @@ input.modalInput {
 .modal-dialog{
 	margin: 190px auto;
 }
+a.modal-contacts-link {
+	font-weight: 700;
+}
+a.modal-contacts-link:last-child > span {
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,9 +1,10 @@
-app.directive('groupNameModal', function($modal){
-	var modalCtrl = function ($scope, $modalInstance, title, group) {
+app.directive('confirmationModal', function($modal){
+	var modalCtrl = function ($scope, $modalInstance, modal, title) {
 		$scope.title = title;
-		$scope.group = group;
+		$scope.modal = modal;
+		console.log($scope.modal);
 		$scope.ok = function () {
-			$modalInstance.close($scope.group);
+			$modalInstance.close($scope.modal);
 		};
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
@@ -12,36 +13,37 @@ app.directive('groupNameModal', function($modal){
 	return {
 		restrict: "A",
 		scope: {
-			title: '@',
-			group: '=',
+			title: '=',
+			modal: '=',
 			saveCallback: '=',
 			cancelCallback: '='
 		},
 		link: function (scope, element) {
+
 			var open = function () {
-				console.log('open');
+				console.log('open delete confirmation message');
+				
 				var modalInstance = $modal.open({
-						templateUrl: 'directives/groupNameModal/groupNameModal.html',
+						templateUrl: 'directives/confirmationModal/confirmationModal.html',
 						controller: modalCtrl,
 						size: 'sm',
 						resolve: {
+							modal: function () {
+								return scope.modal;
+							},
 							title: function () {
 								return scope.title;
-							},
-							group: function () {
-								return scope.group;
 							}
 						}
 					});
 				
-				modalInstance.result.then(function (group) {
-					scope.group = group;
+				modalInstance.result.then(function (modal) {
 					if (scope.saveCallback) {
-						scope.saveCallback(scope.group);
+						scope.saveCallback(modal, true);
 					}
 				}, function () {
 					if (scope.cancelCallback)
-						scope.cancelCallback(scope.group);
+						scope.cancelCallback();
 				});
 			};
 		element.on('click', open)

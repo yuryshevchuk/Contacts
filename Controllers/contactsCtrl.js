@@ -1,27 +1,21 @@
-angular.module("app").controller("ContactsCtrl", function($http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
+angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
 	console.log('fire');
 	$scope.groups = {};
 	$scope.filter = $location.search();
 	$scope.selectedContacts = {};
-	ngProgress.color("#5bc0de");
+	$scope.emptyGroup = {};
+
 
 	userGroupsResource.get({user_email: "default"}, function (groups){
 		$scope.groupStatuses = {};
 		angular.forEach(groups.feed.entry, function(value){
-			$scope.groups[value.id.$t] = {
-				title: value.title.$t,
-				id: value.id.$t,
-				isSystem: false,
-				etag: value.gd$etag
-			}
+			$scope.groups[value.id.$t] = value;
 			if (value.gContact$systemGroup) {
-				$scope.groups[value.id.$t].title = value.title.$t.substring(14);
-				$scope.groups[value.id.$t].isSystem = true;
+				$scope.groups[value.id.$t].title.$t = value.title.$t.substring(14);
 			}
 		});
 	});
 	
-
 	$scope.$watch('filter', function(newVal, oldVal){
 		if ( newVal !== oldVal) {
 			$scope.reloadContacts(newVal);
@@ -29,19 +23,28 @@ angular.module("app").controller("ContactsCtrl", function($http, $scope, $locati
 				$location.search(key, value)
 			})
 		}
-	}, true)
+	}, true);
 
-	$rootScope.getGroupTitle = function(id) {
-		return $scope.groups[id]?$scope.groups[id].title:'';
+	// var message = jsonToGdataService.group({title: {$t: "new group success"}});
+	// userContactsResource.post({user_email: "default"}, message).$promise.then(
+ //        function(){
+ //        }, function(value){
+ //        	console.log(value)
+ //        }
+ //      );
+
+
+	$rootScope.getGroupTitle = function(groupId) {
+		return $scope.groups[groupId]?$scope.groups[groupId].title.$t:'';
 	}
 	$scope.filterByGroup = function (key){
-		$scope.filter.page = 1
+		$scope.filter.page = 1;
 		$scope.filter.group = key;
 	}
 	$scope.onSelectContactCallback = function(index){
 		var contact = $scope.contacts.feed.entry[index];
 		if (contact.isChecked) {
-			$scope.selectedContacts[index] = contact.id.$t;
+			$scope.selectedContacts[index] = contact;
 		} else {
 			delete $scope.selectedContacts[index];
 			//$scope.selectedContacts = $scope.selectedContacts.filter(function(item){return item != contact.id.$t});
@@ -51,7 +54,7 @@ angular.module("app").controller("ContactsCtrl", function($http, $scope, $locati
 		$scope.selectedContacts = {};
 		ngProgress.start();
 			if (!$scope.filter.page) {
-				$scope.filter['page'] = 1
+				$scope.filter['page'] = 1;
 			}
 		userContactsResource.get(angular.extend({user_email: "default", "max-results": numberOfNotesOnThePage, 'start-index': 1+numberOfNotesOnThePage*($scope.filter.page-1)}, newVal)).$promise.then(
         function(value){
@@ -62,36 +65,62 @@ angular.module("app").controller("ContactsCtrl", function($http, $scope, $locati
         }
       );
 	}
-	$scope.saveGroup = function (id) {
-		console.log('group with id:', id, '- saved.')
-	}
 
 	$scope.deleteContacts = function () {
 		console.log('start deleting contacts....', $scope.selectedContacts);
-		angular.forEach($scope.selectedContacts, function(id, index){
-			$http.defaults.headers.common['If-match'] = $scope.contacts.feed.entry[index].gd$etag;
-			id = id.split('/');
-			id = id[id.length - 1];
-			userContactsResource.delete({user_email: "default", user_id: id})
+		angular.forEach($scope.selectedContacts, function(contact, index){
+			$http.defaults.headers.common['If-match'] = contact.gd$etag;
+			console.log(contact);
+			var userId = contact.id.$t.split('/');
+			userId = userId[userId.length - 1];
+			userContactsResource.delete({user_email: "default", user_id: userId},function(){
+				delete $scope.contacts.feed.entry[index];
+				delete $scope.selectedContacts[index];
+				if (!Object.keys($scope.selectedContacts).length)
+					$scope.reloadContacts($scope.filter);
+			});
 		})
 			delete $http.defaults.headers.common['If-match'];
-			//$http.defaults.headers.common['If-match'] = $scope.contacts.feed.gd$etag;
-			$scope.reloadContacts();
 	}
 
-	$scope.deleteGroups = function (id) {
-		$http.defaults.headers.common['If-match'] = $scope.groups[id].etag;
-		shortId = id.split('/');
+	$scope.deleteGroup = function (group) {
+		console.log('start deleting group....', group);
+		$http.defaults.headers.common['If-match'] = group.gd$etag;
+		shortId = group.id.$t.split('/');
 		shortId = shortId[shortId.length - 1];
-		userGroupsResource.delete({user_email: "default", user_id: shortId});
+		userGroupsResource.delete({user_email: "default", group_id: shortId});
 		delete $http.defaults.headers.common['If-match'];
-		delete $scope.groups[id];
+		delete $scope.groups[group.id.$t];
 	}
-	$scope.isSomeContactsSelected = function () {
-		return Object.keys($scope.selectedContacts).length
+	$scope.isContactsSelected = function () {
+		return Object.keys($scope.selectedContacts).length;
+	}
+	$scope.selectAllContacts = function () {
+		var checked = (Object.keys($scope.selectedContacts).length != Object.keys($scope.contacts.feed.entry).length) ? true : false;
+		angular.forEach($scope.contacts.feed.entry, function (contact, key){
+			contact.isChecked = checked;
+			$scope.onSelectContactCallback(key);
+		})
+
 	}
 
-	$scope.reloadContacts();
+	$scope.modalContactsDeleteTitle = function () {
+		var dibilizm;
+		if ($scope.isContactsSelected()) {
+			if ($scope.isContactsSelected() > 1) {
+				return ($scope.isContactsSelected() + ' contacts');
+			} else {
+				angular.forEach($scope.selectedContacts, function (value){
+					dibilizm = value.title.$t
+				})
+				return (dibilizm + ' contact')
+			}
+		};
+	}
+
+
+
+	$scope.reloadContacts($scope.filter);
 });
 
 
