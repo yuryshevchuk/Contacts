@@ -1,10 +1,9 @@
-app.controller("detailedContactCtrl", function($scope, userContactsResource, userPhotoResource, $routeParams, $rootScope, ngProgress){
-	ngProgress.start();
+app.controller("detailedContactCtrl", function($scope, cfpLoadingBar, userContactsResource, userPhotoResource, $routeParams, $rootScope, ngProgress){
+	cfpLoadingBar.start();
 	userContactsResource.get({user_email: "default", user_id: $routeParams.user_id}).$promise.then(
         function(value){
         	$scope.detailedContact = value;
-        	ngProgress.complete();
+        	cfpLoadingBar.complete();
         }, function(){
-        	ngProgress.reset();
         });
 })

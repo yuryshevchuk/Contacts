@@ -1,4 +1,4 @@
-angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
+angular.module("app").controller("ContactsCtrl", function(jsonToGdataService, cfpLoadingBar,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
 	console.log('fire');
 	$scope.groups = {};
 	$scope.filter = $location.search();
@@ -64,12 +64,12 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$h
 
 
 
-	userContactsResource.post({user_email: "default"}, message).$promise.then(
-        function(){
-        }, function(value){
-        	console.log(value)
-        }
-      );
+	// userContactsResource.post({user_email: "default"}, message).$promise.then(
+ //        function(){
+ //        }, function(value){
+ //        	console.log(value)
+ //        }
+ //      );
 
 
 	$rootScope.getGroupTitle = function(groupId) {
@@ -90,16 +90,15 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$h
 	}
 	$scope.reloadContacts = function (newVal){
 		$scope.selectedContacts = {};
-		ngProgress.start();
+		cfpLoadingBar.start();
 			if (!$scope.filter.page) {
 				$scope.filter['page'] = 1;
 			}
 		userContactsResource.get(angular.extend({user_email: "default", "max-results": numberOfNotesOnThePage, 'start-index': 1+numberOfNotesOnThePage*($scope.filter.page-1)}, newVal)).$promise.then(
         function(value){
         	$scope.contacts = value;
-        	ngProgress.complete();
+        	cfpLoadingBar.complete();
         }, function(){
-        	ngProgress.reset();
         }
       );
 	}
@@ -154,9 +153,7 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$h
 				return (dibilizm + ' contact')
 			}
 		};
-	}
-
-
+	};
 
 	$scope.reloadContacts($scope.filter);
 });

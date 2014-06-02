@@ -56,6 +56,10 @@ ul.pagination{
 	background-color: #545454;
 	border-color: #545454;
 }
+.pagination>.active>a:hover{
+	background-color: #D4D4D4;
+	border-color: #D4D4D4;
+}
 .displayBlock{
 	display: block;
 	width: 100%;

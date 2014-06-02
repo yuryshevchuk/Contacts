@@ -4,7 +4,8 @@
 	<li><a href=""><i class="fa fa-sort-amount-desc"></i></a></li>
 	<li confirmation-modal ng-show="isContactsSelected()" title='modalContactsDeleteTitle()' save-callback="deleteContacts"><a href=""><i class="fa fa-trash-o"></i></a></li>
 	<input type="text" placeholder="filter..." ng-model="filter['q']">
-	<paginate class="myPaginate" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page="contacts.feed.openSearch$itemsPerPage.$t" current-page="filter['page']"></paginate>
+	<pagination class="myPaginate" direction-links="false" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page='contacts.feed.openSearch$itemsPerPage.$t' ng-model="filter['page']" num-pages="smallnumPages"></pagination>
+	<!-- <paginate class="myPaginate" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page="contacts.feed.openSearch$itemsPerPage.$t" current-page="filter['page']"></paginate> -->
 </ul>
 
 <ul class="nav nav-tabs groupTabs">

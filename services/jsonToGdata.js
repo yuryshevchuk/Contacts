@@ -17,7 +17,7 @@ app.factory('jsonToGdataService', function (){
 			angular.forEach(value, function (attrObj){
 				angular.forEach(attrObj, function (value, tag){
 					parser(tagFormat(tag), value, key);
-					console.log('1 parsing array', tag, value, key)
+					console.log('1 parsing array', '', value, key)
 				})
 			})
 		};
