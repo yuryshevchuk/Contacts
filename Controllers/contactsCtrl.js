@@ -28,15 +28,15 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$h
 	var message = jsonToGdataService.contact({ 
 	"gd$name": {
      "gd$fullName": {
-      "$t": "Яна"
+      "$t": "TestNewContact"
      },
      "gd$givenName": {
-      "$t": "Яна"
+      "$t": "TestNewContact"
      }
     },
     "gd$email": [
      {
-      "address": "yanasya7@gmail.com",
+      "address": "testNewContactMail@gmail.com",
       "primary": "true",
       "rel": "http://schemas.google.com/g/2005#home"
      }
@@ -44,12 +44,12 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$h
     "gd$phoneNumber": [
      {
       "rel": "http://schemas.google.com/g/2005#home",
-      "uri": "tel:+380-93-710-2625",
-      "$t": "+380937102625"
+      "uri": "tel:+380-99-999-9991",
+      "$t": "+380999999991"
      },
      {
       "rel": "http://schemas.google.com/g/2005#mobile",
-      "$t": "097-758-9400"
+      "$t": "091-111-4444"
      }
     ],
     "gContact$groupMembershipInfo": [
@@ -64,12 +64,12 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$h
 
 
 
-	// userContactsResource.post({user_email: "default"}, message).$promise.then(
- //        function(){
- //        }, function(value){
- //        	console.log(value)
- //        }
- //      );
+	userContactsResource.post({user_email: "default"}, message).$promise.then(
+        function(){
+        }, function(value){
+        	console.log(value)
+        }
+      );
 
 
 	$rootScope.getGroupTitle = function(groupId) {
