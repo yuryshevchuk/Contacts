@@ -25,7 +25,45 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService ,$h
 		}
 	}, true);
 
-	// var message = jsonToGdataService.group({title: {$t: "new group success"}});
+	var message = jsonToGdataService.contact({ 
+	"gd$name": {
+     "gd$fullName": {
+      "$t": "Яна"
+     },
+     "gd$givenName": {
+      "$t": "Яна"
+     }
+    },
+    "gd$email": [
+     {
+      "address": "yanasya7@gmail.com",
+      "primary": "true",
+      "rel": "http://schemas.google.com/g/2005#home"
+     }
+    ],
+    "gd$phoneNumber": [
+     {
+      "rel": "http://schemas.google.com/g/2005#home",
+      "uri": "tel:+380-93-710-2625",
+      "$t": "+380937102625"
+     },
+     {
+      "rel": "http://schemas.google.com/g/2005#mobile",
+      "$t": "097-758-9400"
+     }
+    ],
+    "gContact$groupMembershipInfo": [
+     {
+      "deleted": "false",
+      "href": "http://www.google.com/m8/feeds/groups/shevchuk89%40gmail.com/base/6"
+     }
+    ]
+ });
+
+
+
+
+
 	// userContactsResource.post({user_email: "default"}, message).$promise.then(
  //        function(){
  //        }, function(value){
