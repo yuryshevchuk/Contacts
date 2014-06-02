@@ -51,12 +51,6 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService, cf
       "rel": "http://schemas.google.com/g/2005#mobile",
       "$t": "091-111-4444"
      }
-    ],
-    "gContact$groupMembershipInfo": [
-     {
-      "deleted": "false",
-      "href": "http://www.google.com/m8/feeds/groups/shevchuk89%40gmail.com/base/6"
-     }
     ]
  });
 
@@ -64,12 +58,12 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService, cf
 
 
 
-	// userContactsResource.post({user_email: "default"}, message).$promise.then(
- //        function(){
- //        }, function(value){
- //        	console.log(value)
- //        }
- //      );
+	userContactsResource.post({user_email: "default"}, message).$promise.then(
+        function(){
+        }, function(value){
+        	console.log(value)
+        }
+      );
 
 
 	$rootScope.getGroupTitle = function(groupId) {
