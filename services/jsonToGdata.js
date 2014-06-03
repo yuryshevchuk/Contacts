@@ -74,7 +74,11 @@ app.factory('jsonToGdataService', function (){
 			"xmlns:gd='http://schemas.google.com/g/2005'>" +
 			"<atom:category scheme='http://schemas.google.com/g/2005#kind' " +
 			"term='http://schemas.google.com/contact/2008#contact' />";
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> f1a6361da5c266449e1ee026135ec511e4177f18
 			angular.forEach(obj, function(value, key){
 				res += parser(key, value);
 			})

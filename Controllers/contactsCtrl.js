@@ -58,12 +58,12 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 
 
 
-	// userContactsResource.post({user_email: "default"}, message).$promise.then(
- //        function(){
- //        }, function(value){
- //        	console.log(value)
- //        }
- //      );
+	userContactsResource.post({user_email: "default"}, message).$promise.then(
+        function(){
+        }, function(value){
+        	console.log(value)
+        }
+      );
 
 
 	$rootScope.getGroupTitle = function(groupId) {
