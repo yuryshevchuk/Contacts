@@ -1,11 +1,11 @@
 app.factory('jsonToGdataService', function (){
 	var attachment = '';
-	var template = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom'" +
+	var template = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' " +
 		"xmlns:gd='http://schemas.google.com/g/2005'>" +
-		"<atom:category scheme='http://schemas.google.com/g/2005#kind'" +
-		"term='http://schemas.google.com/contact/2008#contact'/>" +
+		"<atom:category scheme='http://schemas.google.com/g/2005#kind' " +
+		"term='http://schemas.google.com/contact/2008#contact' />" +
 		attachment + "</atom:entry>";
-	
+
 	function parser (key, value, parent) {
 		var res ='', tagValue='', tagAttrs='';
 		console.log(key, value, parent);
@@ -26,7 +26,7 @@ app.factory('jsonToGdataService', function (){
 				if (tag[0] == '$') {
 					tagValue = value;
 				} else {
-					tagAttrs += tag +'=' +'"' + value +'"';
+					tagAttrs += ' '+tag +'=' +'"' + value +'"';
 				}
 			});
 			console.log('2 parsing obj with parent', parent, tagValue, tagAttrs)
@@ -57,26 +57,24 @@ app.factory('jsonToGdataService', function (){
 	};
 
 	function createNode(tagName, tagValue, tagAttrs){
-		var space = ' ';
 		if (!tagAttrs) {
 			tagAttrs = '';
-			space = '';
 		}
 		if (!tagValue) {
 			tagValue = '';
 		}
-		var tagstroke='<' + tagName + space + tagAttrs+'>' + tagValue + '</' + tagName + '>';
+		var tagstroke='<' + tagName + tagAttrs+'>' + tagValue + '</' + tagName + '>';
 		return tagstroke;
 	}
 
 	return {
 		contact: function (obj) {
 			var res='';
-			var template = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom'" +
+			var template = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' " +
 			"xmlns:gd='http://schemas.google.com/g/2005'>" +
-			"<atom:category scheme='http://schemas.google.com/g/2005#kind'" +
-			"term='http://schemas.google.com/contact/2008#contact'/>";
-			
+			"<atom:category scheme='http://schemas.google.com/g/2005#kind' " +
+			"term='http://schemas.google.com/contact/2008#contact' />";
+
 			angular.forEach(obj, function(value, key){
 				res += parser(key, value);
 			})
@@ -85,4 +83,4 @@ app.factory('jsonToGdataService', function (){
 			return template;
 		}
 	}
-})
+});

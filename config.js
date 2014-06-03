@@ -17,6 +17,9 @@ app.config(function($routeProvider, $resourceProvider, authProvider, $httpProvid
 		template: "<h2>You are not loged anymore</h2><a href='#/contacts/page/1' class='btn btn-info'>Log In</a>",
 		controller: "logCtrl"
 	})
+	.otherwise({
+		redirectTo: "/contacts"
+	})
 
 	authProvider.config({
 		scope: ["email", "profile","https://www.google.com/m8/feeds"],

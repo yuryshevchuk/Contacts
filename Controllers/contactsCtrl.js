@@ -1,4 +1,4 @@
-angular.module("app").controller("ContactsCtrl", function(jsonToGdataService, cfpLoadingBar,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
+angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, cfpLoadingBar,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
 	console.log('fire');
 	$scope.groups = {};
 	$scope.filter = $location.search();
@@ -50,12 +50,6 @@ angular.module("app").controller("ContactsCtrl", function(jsonToGdataService, cf
      {
       "rel": "http://schemas.google.com/g/2005#mobile",
       "$t": "091-111-4444"
-     }
-    ],
-    "gContact$groupMembershipInfo": [
-     {
-      "deleted": "false",
-      "href": "http://www.google.com/m8/feeds/groups/shevchuk89%40gmail.com/base/6"
      }
     ]
  });

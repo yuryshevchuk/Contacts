@@ -15,6 +15,9 @@ var obj = {
 }
 
 var entry = {
+    "title": {
+     "$t": "Ермол"
+    }
 	 "gd$name": {
      "gd$fullName": {
       "$t": "Яна"

@@ -1,9 +1,9 @@
 <ul class="nav nav-pills">
 	<li ng-click="selectAllContacts()"><a href=""><i class="fa fa-check-square-o"></i></a></li>
-	<li><a href=""><i class="fa fa-plus"></i></a></li>
+	<li><a href="#/contacts/add"><i class="fa fa-plus"></i></a></li>
 	<li><a href=""><i class="fa fa-sort-amount-desc"></i></a></li>
 	<li confirmation-modal ng-show="isContactsSelected()" title='modalContactsDeleteTitle()' save-callback="deleteContacts"><a href=""><i class="fa fa-trash-o"></i></a></li>
-	<input type="text" placeholder="filter..." ng-model="filter['q']">
+	<input type="text" class='filterInput' placeholder="filter..." ng-model="filter['q']">
 	<pagination class="myPaginate" direction-links="false" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page='contacts.feed.openSearch$itemsPerPage.$t' ng-model="filter['page']" num-pages="smallnumPages"></pagination>
 	<!-- <paginate class="myPaginate" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page="contacts.feed.openSearch$itemsPerPage.$t" current-page="filter['page']"></paginate> -->
 </ul>
@@ -30,7 +30,7 @@
 	</div>
 	<div class="listBody container-fluid" ng-click="$event.stopPropagation()">
 		<div ng-repeat="contact in contacts.feed.entry" class="listRow row">
-			<a class="displayBlock" href="#/contacts/{{contact.id.$t | leaveOnlyId}}">
+			<a class="displayBlock" href="#/contacts/{{contact.id.$t | leaveOnlyId}}" ng-click="$event.stopPropagation()">
 				<div class="listName col-sm-4 col-xs-4"><input class="userName disabledOn576width" id="contact{{contact.id.$t | leaveOnlyId}}" type="checkbox" ng-model="contact.isChecked" ng-change="onSelectContactCallback($index)">{{contact.title.$t}}</div>
 				<div class="listEmail col-sm-3 col-xs-4"><div ng-repeat="email in contact.gd$email">{{email.address}}</div></div>
 				<div class="listPhone col-sm-3 col-xs-4"><div class="phone inline-block" ng-repeat="phone in contact.gd$phoneNumber">{{phone.$t}}</div></div>
