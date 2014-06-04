@@ -1,10 +1,21 @@
 <div class="container-fluid">
-
+<form editable-form name="editableForm" onaftersave="saveContact()">
 	<ul class="nav nav-pills">
 		<li><a href="#/contacts"><i class="fa fa-arrow-left"></i></a></li>
 		<li ng-show="userId == 'add' && detailedContact.entry.title.$t"><a href=""><i class="fa fa-floppy-o"></i></a></li>
 		<li ng-hide="userId == 'add'"><a href=""><i class="fa fa-trash-o"></i></a></li>
+		<li> <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button></li>
+		<li><span ng-show="editableForm.$visible">
+        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+          Cancel
+        </button>
+
+      </span></li>
 	</ul>
+	
 	<div class="segment row">
 
 		<div class="col-md-2">
@@ -12,14 +23,14 @@
 		</div>
 		<div class="col-md-4">
 			<h3 ng-show="userId == 'add'">Add new contact</h3>
-			<h1 class='editable editable-click' editable-text="detailedContact.entry.title.$t">{{detailedContact.entry.title.$t || 'Click to add name'}}</h1>
+			<label class="contactInfoLabel">Name:</label><h1 class='editable editable-click' e-name='contactName' editable-text="detailedContact.entry.gd$name.gd$givenName.$t">{{detailedContact.entry.gd$name.gd$givenName.$t || 'Click edit to enter contact name'}}</h1>
 			<br>
-			<span class="label label-info groupLabel" ng-repeat="group in detailedContact.entry.gContact$groupMembershipInfo">{{getGroupTitle(group.href)}}</span>
+			<label class="contactInfoLabel">Groups:</label><span class="label label-info groupLabel" ng-repeat="group in detailedContact.entry.gContact$groupMembershipInfo">{{getGroupTitle(group.href)}}</span>
 			<br>
-			<h3 ng-repeat="email in detailedContact.entry.gd$email" editable-text="email.address">{{email.address || 'Click to enter e-mail'}}</h3>
-			<ul class="contactPhones">
-				<li ng-repeat="phone in detailedContact.entry.gd$phoneNumber" editable-text="phone.$t">{{phone.$t || 'Click to enter phone'}}</li>
-			</ul>
+			<label class="contactInfoLabel">Emails:</label><a href='' ng-repeat="email in detailedContact.entry.gd$email" editable-text="email.address">{{email.address}}</a><a href="" ng-click='detailedContact.entry.gd$email.push({"rel": "http://schemas.google.com/g/2005#home", "address": ""})'><i class="fa fa-plus"></i></a><a href="" ng-click='detailedContact.entry.gd$email.pop()'><i class="fa fa-trash-o"></i></a>
+			<div class="contactPhones"><label class="contactInfoLabel">Phones:</label>
+				<a href='' ng-repeat="phone in detailedContact.entry.gd$phoneNumber" editable-text="phone.$t">{{phone.$t}}</a><a href="" ng-click='detailedContact.entry.gd$phoneNumber.push({"rel": "http://schemas.google.com/g/2005#home", $t: ""})'><i class="fa fa-plus"></i></a><a href="" ng-click='detailedContact.entry.gd$phoneNumber.pop()'><i class="fa fa-trash-o"></i></a>
+			</div>
 		</div>
 		<div class="col-md-6 connectionsField disabledOn576width">
 			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/googleSmall.png"><strong>Google+:</strong> not connected</div>
@@ -27,23 +38,28 @@
 			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/instagramSmall.png"><strong>Instagram:</strong> not connected</div>
 		</div>
 	</div>
-	<div class="segment row">
+	<div class="segment container-fluid row">
 		<div class="col-md-4 col-md-offset-2">
 			<div class="contactInputField row">
-
-					<div>
-					<label class="contactInfoLabel">Post:</label><a ng-repeat='address in detailedContact.entry.gd$structuredPostalAddress' href="" editable-text="address.gd$formattedAddress.$t">{{address.gd$formattedAddress.$t || 'click to add'}}</a></div>
-					<div>
-					<label class="contactInfoLabel">Birthday:</label><a href="" editable-text="detailedContact.entry.gContact$birthday.when">{{detailedContact.entry.gContact$birthday.when || 'click to add'}}</a></div>
-					<div>
-					<label class="contactInfoLabel">URL:</label><a ng-repeat='url in detailedContact.entry.gContact$website' href="" editable-text="url.href">{{url.href || 'click to add'}}</a></div>
-					<div ng-repeat='userInfo in detailedContact.entry.gContact$userDefinedField'>
-					<label class="contactInfoLabel" editable-text="userInfo.key">{{userInfo.key}}:</label><a href="" editable-text="userInfo.value">{{userInfo.value || 'click to add'}}</a></div>
-
+				<div>
+				<label class="contactInfoLabel">Post:</label><a ng-repeat='address in detailedContact.entry.gd$structuredPostalAddress' href="" editable-text="address.gd$formattedAddress.$t">{{address.gd$formattedAddress.$t}}</a><a href="" ng-click="detailedContact.entry.gd$structuredPostalAddress.push({
+			     'rel': 'http://schemas.google.com/g/2005#home',
+				    'gd$formattedAddress': {
+				     '$t': ''
+				  	 }
+				})"><i class="fa fa-plus"></i></a><a href="" ng-click='detailedContact.entry.gd$structuredPostalAddress.pop()'><i class="fa fa-trash-o"></i></a></div>
+				<div>
+				<label class="contactInfoLabel">Birthday:</label><a href="" editable-text="detailedContact.entry.gContact$birthday.when">{{detailedContact.entry.gContact$birthday.when}}</a></div>
+				<div>
+				<label class="contactInfoLabel">URL:</label><a ng-repeat='url in detailedContact.entry.gContact$website' href="" editable-text="url.href">{{url.href}}</a><a href="" ng-click="detailedContact.entry.gContact$website.push({'href': ''})"><i class="fa fa-plus"></i></a><a href="" ng-click='detailedContact.entry.gContact$website.pop()'><i class="fa fa-trash-o"></i></a></div>
+				<div ng-repeat='userInfo in detailedContact.entry.gContact$userDefinedField'>
+				<label class="contactInfoLabel" editable-text="userInfo.key">{{userInfo.key}}:</label><a href="" editable-text="userInfo.value">{{userInfo.value}}</a><a href=""><i class="fa fa-plus"></i></a><a href=""><i class="fa fa-trash-o"></i></a></div>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<textarea type="text" class="bigNote" placeholder="Add a note">{{detailedContact.entry.content.$t}}</textarea>
 		</div>
 	</div>
+</form>
+
 </div>

@@ -25,45 +25,45 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 		}
 	}, true);
 
-	var message = jsonToGdataService.contact({ 
-	"gd$name": {
-     "gd$fullName": {
-      "$t": "TestNewContact"
-     },
-     "gd$givenName": {
-      "$t": "TestNewContact"
-     }
-    },
-    "gd$email": [
-     {
-      "address": "testNewContactMail@gmail.com",
-      "primary": "true",
-      "rel": "http://schemas.google.com/g/2005#home"
-     }
-    ],
-    "gd$phoneNumber": [
-     {
-      "rel": "http://schemas.google.com/g/2005#home",
-      "uri": "tel:+380-99-999-9991",
-      "$t": "+380999999991"
-     },
-     {
-      "rel": "http://schemas.google.com/g/2005#mobile",
-      "$t": "091-111-4444"
-     }
-    ]
- });
+	// var message = jsonToGdataService.contact({ 
+	// "gd$name": {
+ //     "gd$fullName": {
+ //      "$t": "TestNewContact"
+ //     },
+ //     "gd$givenName": {
+ //      "$t": "TestNewContact"
+ //     }
+ //    },
+ //    "gd$email": [
+ //     {
+ //      "address": "testNewContactMail@gmail.com",
+ //      "primary": "true",
+ //      "rel": "http://schemas.google.com/g/2005#home"
+ //     }
+ //    ],
+ //    "gd$phoneNumber": [
+ //     {
+ //      "rel": "http://schemas.google.com/g/2005#home",
+ //      "uri": "tel:+380-99-999-9991",
+ //      "$t": "+380999999991"
+ //     },
+ //     {
+ //      "rel": "http://schemas.google.com/g/2005#mobile",
+ //      "$t": "091-111-4444"
+ //     }
+ //    ]
+ // });
 
 
 
 
 
-	userContactsResource.post({user_email: "default"}, message).$promise.then(
-        function(){
-        }, function(value){
-        	console.log(value)
-        }
-      );
+	// userContactsResource.post({user_email: "default"}, message).$promise.then(
+ //        function(){
+ //        }, function(value){
+ //        	console.log(value)
+ //        }
+ //      );
 
 
 	$rootScope.getGroupTitle = function(groupId) {

@@ -6,6 +6,10 @@ app.factory("userContactsResource", function($resource){
 				method:'POST',
 				headers: {'Content-Type': 'application/atom+xml'}
 			},
+			put: {
+				method: 'PUT',
+				headers: {'Content-Type': 'application/atom+xml'}
+			},
 			delete: {method: 'DELETE'}
 		});
 });

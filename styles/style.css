@@ -226,7 +226,10 @@ p.addInfoLabels {
 .plusBtn {
 	margin-left: 10px;
 }
-
+span.editable-wrap {
+	display: block;
+	width: 75%;
+}
 
 
 
