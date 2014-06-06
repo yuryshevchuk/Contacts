@@ -144,9 +144,10 @@ input[type=text].filterInput{
 	border-bottom: none;
 }
 label.contactInfoLabel{
+
 	margin-right: 20px;
 	font-weight: 400;
-	padding: 8px 0px 0px 0px;
+	padding: 12px 0px 0px 0px;
 }
 .contactInfo{
 	width: 100%;
@@ -162,8 +163,8 @@ textarea::-webkit-input-placeholder{
 .contactInputField{
 	padding-bottom: 50px;
 }
-.contactPhones{
-	padding-top: 15px;
+.contactInfoFields{
+	padding-top: 10px;
 }
 li.addButton > a{
 	font-size: 21px;
@@ -227,10 +228,17 @@ p.addInfoLabels {
 	margin-left: 10px;
 }
 span.editable-wrap {
-	display: block;
 	width: 75%;
 }
-
+.infoFieldTrash {
+	margin-left: 15px;
+}
+div.customPadding {
+	padding-left: 4px;
+}
+textarea:disabled {
+	background-color: #F0FFFF;
+}
 
 
 

@@ -2,6 +2,7 @@ app.directive('groupNameModal', function($modal){
 	var modalCtrl = function ($scope, $modalInstance, title, group) {
 		$scope.title = title;
 		$scope.group = group;
+
 		$scope.ok = function () {
 			$modalInstance.close($scope.group);
 		};
@@ -20,6 +21,7 @@ app.directive('groupNameModal', function($modal){
 		link: function (scope, element) {
 			var open = function () {
 				console.log('open');
+				console.log(scope.group)
 				var modalInstance = $modal.open({
 						templateUrl: 'directives/groupNameModal/groupNameModal.html',
 						controller: modalCtrl,

@@ -1,7 +1,7 @@
 <ul class="nav nav-pills">
 	<li ng-click="selectAllContacts()"><a href=""><i class="fa fa-check-square-o"></i></a></li>
 	<li><a href="#/contacts/add"><i class="fa fa-plus"></i></a></li>
-	<li><a href=""><i class="fa fa-sort-amount-desc"></i></a></li>
+	<!-- <li><a href=""><i class="fa fa-sort-amount-desc"></i></a></li> -->
 	<li confirmation-modal ng-show="isContactsSelected()" title='modalContactsDeleteTitle()' save-callback="deleteContacts"><a href=""><i class="fa fa-trash-o"></i></a></li>
 	<input type="text" class='filterInput' placeholder="filter..." ng-model="filter['q']">
 	<pagination class="myPaginate" direction-links="false" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page='contacts.feed.openSearch$itemsPerPage.$t' ng-model="filter['page']" num-pages="smallnumPages"></pagination>
@@ -15,11 +15,11 @@
 		<button class="btn-link dropdown-toggle" ng-hide="group.gContact$systemGroup" ng-click="$event.stopPropagation()"><b class="caret"></b></button>
   	</a>
   	<ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation()">
-        <li group-name-modal title="Edit existing group" group="group" save-callback="saveOrDeleteGroup"><a href="">Edit group</a></li>
+        <li group-name-modal title="Edit existing group" group="group" save-callback="editGroup"><a href="">Edit group</a></li>
         <li confirmation-modal modal="group" save-callback="deleteGroup"><a href="">Delete group</a></li>
     </ul>
 </li>
-<li group-name-modal title="Add new group" group="emptyGroup" save-callback="saveGroup" class="addButton"><a href="">+</a></li>
+<li group-name-modal title="Add new group" group="emptyGroup" save-callback="createGroup" class="addButton"><a href="">+</a></li>
 </ul>
 
 <div class="list container-fluid">

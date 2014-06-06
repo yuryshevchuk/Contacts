@@ -1,35 +1,49 @@
 <div class="container-fluid">
 <form editable-form name="editableForm" onaftersave="saveContact()">
 	<ul class="nav nav-pills">
-		<li><a href="#/contacts"><i class="fa fa-arrow-left"></i></a></li>
+		<li><a href='' ng-click='backToPrevPage()'><i class="fa fa-arrow-left"></i></a></li>
 		<li ng-show="userId == 'add' && detailedContact.entry.title.$t"><a href=""><i class="fa fa-floppy-o"></i></a></li>
-		<li ng-hide="userId == 'add'"><a href=""><i class="fa fa-trash-o"></i></a></li>
+		<li confirmation-modal  title='modalContactDeleteTitle()' save-callback="deleteContact" ng-hide="userId == 'add'"><a href=""><i class="fa fa-trash-o"></i></a></li>
 		<li> <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">Edit</button></li>
-		<li><span ng-show="editableForm.$visible">
-        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
-          Save
-        </button>
-        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
-          Cancel
-        </button>
-
-      </span></li>
 	</ul>
-	
-	<div class="segment row">
 
+	<div ng-show='loadingComplete' class="segment row">
 		<div class="col-md-2">
 			<img ng-src="images/empty.jpg" class="img-rounded">
+			<div class="contactInfoFields">Updated: {{detailedContact.entry.updated.$t}}</div>
 		</div>
 		<div class="col-md-4">
+			<div>
+
 			<h3 ng-show="userId == 'add'">Add new contact</h3>
-			<label class="contactInfoLabel">Name:</label><h1 class='editable editable-click' e-name='contactName' editable-text="detailedContact.entry.gd$name.gd$givenName.$t">{{detailedContact.entry.gd$name.gd$givenName.$t || 'Click edit to enter contact name'}}</h1>
+			
+
+			                                         <!-- START OF INPUTS !!!! -->
+
+			<label class="contactInfoLabel displayBlock">Name:</label><h1 class='editable editable-click contactInfoFields' e-name='contactName' editable-text="detailedContact.entry.gd$name.gd$givenName.$t">{{detailedContact.entry.gd$name.gd$givenName.$t}}</h1>
 			<br>
+
+
 			<label class="contactInfoLabel">Groups:</label><span class="label label-info groupLabel" ng-repeat="group in detailedContact.entry.gContact$groupMembershipInfo">{{getGroupTitle(group.href)}}</span>
 			<br>
-			<label class="contactInfoLabel">Emails:</label><a href='' ng-repeat="email in detailedContact.entry.gd$email" editable-text="email.address">{{email.address}}</a><a href="" ng-click='detailedContact.entry.gd$email.push({"rel": "http://schemas.google.com/g/2005#home", "address": ""})'><i class="fa fa-plus"></i></a><a href="" ng-click='detailedContact.entry.gd$email.pop()'><i class="fa fa-trash-o"></i></a>
-			<div class="contactPhones"><label class="contactInfoLabel">Phones:</label>
-				<a href='' ng-repeat="phone in detailedContact.entry.gd$phoneNumber" editable-text="phone.$t">{{phone.$t}}</a><a href="" ng-click='detailedContact.entry.gd$phoneNumber.push({"rel": "http://schemas.google.com/g/2005#home", $t: ""})'><i class="fa fa-plus"></i></a><a href="" ng-click='detailedContact.entry.gd$phoneNumber.pop()'><i class="fa fa-trash-o"></i></a>
+
+			<div>
+			<label class="contactInfoLabel">Emails:</label><a href="" ng-show="editableForm.$visible" ng-click='detailedContact.entry.gd$email.push({"rel": "http://schemas.google.com/g/2005#home", "address": ""})'><i class="fa fa-plus"></i></a>
+			<div ng-repeat="email in detailedContact.entry.gd$email" class="contactInfoFields">
+			<a href='' editable-text="email.address">{{email.address}}</a><a class='infoFieldTrash' href="" ng-show="editableForm.$visible" ng-click='detailedContact.entry.gd$email.pop()'><i class="fa fa-trash-o"></i></a>
+			</div>
+			</div>
+			
+
+
+			<div>
+			<label class="contactInfoLabel">Phones:</label><a href="" ng-show="editableForm.$visible" ng-click='detailedContact.entry.gd$phoneNumber.push({"rel": "http://schemas.google.com/g/2005#home", $t: ""})'><i class="fa fa-plus"></i></a>
+			<div ng-repeat="phone in detailedContact.entry.gd$phoneNumber" class="contactInfoFields">
+				<a href='' editable-text="phone.$t">{{phone.$t}}</a><a class='infoFieldTrash' href="" ng-show="editableForm.$visible" ng-click='detailedContact.entry.gd$phoneNumber.pop()'><i class="fa fa-trash-o"></i></a>
+			</div>
+			</div>
+
+
 			</div>
 		</div>
 		<div class="col-md-6 connectionsField disabledOn576width">
@@ -38,26 +52,54 @@
 			<div class="connectionsAvailable"><img class="socNetImage img-rounded" src="images/instagramSmall.png"><strong>Instagram:</strong> not connected</div>
 		</div>
 	</div>
-	<div class="segment container-fluid row">
-		<div class="col-md-4 col-md-offset-2">
-			<div class="contactInputField row">
-				<div>
-				<label class="contactInfoLabel">Post:</label><a ng-repeat='address in detailedContact.entry.gd$structuredPostalAddress' href="" editable-text="address.gd$formattedAddress.$t">{{address.gd$formattedAddress.$t}}</a><a href="" ng-click="detailedContact.entry.gd$structuredPostalAddress.push({
+
+
+	<div  ng-show='loadingComplete' class="segment container-fluid row">
+		<div class="col-md-4 col-md-offset-2 customPadding">
+			<div class="contactInputField">
+				
+
+
+			                                         <!-- SECOND PART OF INPUTS -->
+
+
+				<label class="contactInfoLabel">Post:</label>
+				<a href="" ng-show="editableForm.$visible" ng-click="detailedContact.entry.gd$structuredPostalAddress.push({
 			     'rel': 'http://schemas.google.com/g/2005#home',
 				    'gd$formattedAddress': {
 				     '$t': ''
 				  	 }
-				})"><i class="fa fa-plus"></i></a><a href="" ng-click='detailedContact.entry.gd$structuredPostalAddress.pop()'><i class="fa fa-trash-o"></i></a></div>
+				})"><i class="fa fa-plus"></i></a>
+				<div ng-repeat='address in detailedContact.entry.gd$structuredPostalAddress' class="contactInfoFields">
+					<a href="" editable-text="address.gd$formattedAddress.$t">{{address.gd$formattedAddress.$t}}</a><a class='infoFieldTrash' href="" ng-show="editableForm.$visible" ng-click='detailedContact.entry.gd$structuredPostalAddress.pop()'><i class="fa fa-trash-o"></i></a>
+				</div>
+				
+
+
 				<div>
-				<label class="contactInfoLabel">Birthday:</label><a href="" editable-text="detailedContact.entry.gContact$birthday.when">{{detailedContact.entry.gContact$birthday.when}}</a></div>
-				<div>
-				<label class="contactInfoLabel">URL:</label><a ng-repeat='url in detailedContact.entry.gContact$website' href="" editable-text="url.href">{{url.href}}</a><a href="" ng-click="detailedContact.entry.gContact$website.push({'href': ''})"><i class="fa fa-plus"></i></a><a href="" ng-click='detailedContact.entry.gContact$website.pop()'><i class="fa fa-trash-o"></i></a></div>
+				<label class="contactInfoLabel displayBlock">Birthday:</label><a href="" class="contactInfoFields" editable-text="detailedContact.entry.gContact$birthday.when">{{detailedContact.entry.gContact$birthday.when}}</a></div>
+
+
+				<label class="contactInfoLabel">URL:</label><a href="" ng-show="editableForm.$visible" ng-click='detailedContact.entry.gContact$website.push({"rel": "home-page", "href": ""})'><i class="fa fa-plus"></i></a>
+				<div ng-repeat='url in detailedContact.entry.gContact$website' class="contactInfoFields">
+				<a href="" editable-text="url.href">{{url.href}}</a><a class='infoFieldTrash' href="" ng-show="editableForm.$visible" ng-click='detailedContact.entry.gContact$website.pop()'><i class="fa fa-trash-o"></i></a></div>
+
+
+				<!-- <label class="contactInfoLabel" editable-text="userInfo.key">Custom Fields:</label>
 				<div ng-repeat='userInfo in detailedContact.entry.gContact$userDefinedField'>
-				<label class="contactInfoLabel" editable-text="userInfo.key">{{userInfo.key}}:</label><a href="" editable-text="userInfo.value">{{userInfo.value}}</a><a href=""><i class="fa fa-plus"></i></a><a href=""><i class="fa fa-trash-o"></i></a></div>
+				<label class="contactInfoLabel" editable-text="userInfo.key">{{userInfo.key}}:</label><a href="" editable-text="userInfo.value">{{userInfo.value}}</a><a href="" ng-click="detailedContact.entry.gContact$userDefinedField.pop()"><i class="fa fa-trash-o"></i></a></div><a ng-click="detailedContact.entry.gContact$userDefinedField.push({key:'',value:''})" href=""><i class="fa fa-plus"></i></a> -->
+
 			</div>
+		<span ng-show="editableForm.$visible"><button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+          Cancel
+        </button>
+      </span>
 		</div>
 		<div class="col-md-6">
-			<textarea type="text" class="bigNote" placeholder="Add a note">{{detailedContact.entry.content.$t}}</textarea>
+			<textarea ng-disabled='!editableForm.$visible' type="text" class="bigNote" placeholder="Add a note" ng-model="detailedContact.entry.content.$t">{{detailedContact.entry.content.$t}}</textarea>
 		</div>
 	</div>
 </form>

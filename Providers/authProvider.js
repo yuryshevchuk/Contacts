@@ -16,6 +16,9 @@ app.provider("auth", function(){
 		data[key] = value;
 		window.localStorage.setItem(config.storage_key, JSON.stringify(data));
 	};
+	// var clearStorage = function () {
+	// 	window.localStorage.setItem(config.storage_key, JSON.stringify({}));
+	// };
 	var checkToken = function () {
 		return !!get("token");
 	};
@@ -72,9 +75,11 @@ app.provider("auth", function(){
 	}
 	this.$get = function ($http){
 		if (isServiceResponse() && !parseResponse()){
+			// clearStorage();
 			redirect();
 		}
 		if (!checkToken()) {
+			// clearStorage();
 			redirect();
 		}
 		validateToken($http);

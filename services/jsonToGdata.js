@@ -75,10 +75,13 @@ app.factory('jsonToGdataService', function (){
 			angular.forEach(value, function (obj) {
 				var tagAttrs ='';
 				angular.forEach(obj, function (content, tag){
-					tagAttrs += ' ' + tag + '=' + '"' + content + '"';
+					if (tag != "$$hashKey") {
+						tagAttrs += ' ' + tag + '=' + '"' + content + '"';
+					};
 				})
 				res += createNode(tagFormat(key), '', tagAttrs)
 			})
+			console.log(res)
 			return res;
 		}
 	}
@@ -91,6 +94,9 @@ app.factory('jsonToGdataService', function (){
 		
 		console.log(key, value, parent);
 
+		if (key == 'link' || key == 'category' || key == 'gd$etag' || key == 'id' || key == 'app$edited' || key == 'updated' || key == 'xmlns' || key == 'xmlns$batch' || key == 'xmlns$gContact' || key == 'xmlns$gd') {
+			return '';
+		};
 		if (key == 'gd$email') {
 			return parsers.emailParser(key, value);
 		};
@@ -103,7 +109,7 @@ app.factory('jsonToGdataService', function (){
 		if (key == 'gd$structuredPostalAddress') {
 			return parsers.postParser(key, value);
 		};
-		if (key == 'gd$gContact$website') {
+		if (key == 'gContact$website' || key == 'gContact$userDefinedField') {
 			return parsers.websiteParser(key, value);
 		};
 
@@ -215,6 +221,29 @@ app.factory('jsonToGdataService', function (){
 			})
 			template = template + res + "</atom:entry>";
 			console.log('template', template)
+			return template;
+		},
+		group: function (group) {
+			var template;
+			if (group.gd$etag) {
+				template = '<atom:entry xmlns:gd="http://schemas.google.com/g/2005" ' +
+      			'gd:etag="' + group.gd$etag + '">' +
+    			'<atom:category scheme="http://schemas.google.com/g/2005#kind" ' +
+      			'term="http://schemas.google.com/g/2005#group"/>' +
+    			'<atom:id>' + group.id.$t + '</atom:id>' +
+    			'<atom:published>' + group.app$edited.$t + '</atom:published>' +
+    			'<atom:updated>' + group.updated.$t + '</atom:updated>' +
+    			'<atom:title type="text">' + group.title.$t + '</atom:title>' +
+    			'<atom:content type="text">' + group.title.$t + '</atom:content>' +
+    			'</atom:entry>'
+			} else {
+				template = '<atom:entry xmlns:gd="http://schemas.google.com/g/2005">' +
+	  			'<atom:category scheme="http://schemas.google.com/g/2005#kind" ' +
+	    		'term="http://schemas.google.com/contact/2008#group"/>' +
+	  			'<atom:title type="text">' + group.title.$t + '</atom:title>' +
+				'</atom:entry>'
+			}
+
 			return template;
 		}
 	}

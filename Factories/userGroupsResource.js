@@ -6,6 +6,10 @@ app.factory("userGroupsResource", function($resource){
 				method:'POST',
 				headers: {'Content-Type': 'application/atom+xml'}
 			},
-			delete: {method: 'DELETE'}
+			delete: {method: 'DELETE'},
+			put: {
+				method: 'PUT',
+				headers: {'Content-Type': 'application/atom+xml'}
+			}
 		});
 });

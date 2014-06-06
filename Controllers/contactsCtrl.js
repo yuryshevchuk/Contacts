@@ -22,6 +22,7 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 			angular.forEach(newVal, function(value, key){
 				$location.search(key, value)
 			})
+			$rootScope.filter = newVal;
 		}
 	}, true);
 
@@ -65,6 +66,8 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
  //        }
  //      );
 
+
+	
 
 	$rootScope.getGroupTitle = function(groupId) {
 		return $scope.groups[groupId]?$scope.groups[groupId].title.$t:'';
@@ -115,6 +118,7 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 	}
 
 	$scope.deleteGroup = function (group) {
+		var shortId;
 		console.log('start deleting group....', group);
 		$http.defaults.headers.common['If-match'] = group.gd$etag;
 		shortId = group.id.$t.split('/');
@@ -149,6 +153,24 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 		};
 	};
 
+	$scope.createGroup = function (group) {
+		var creationRequest = jsonToGdataService.group(group);
+		userContactsResource.post({user_email: "default"}, creationRequest).$promise.then(function(value){
+			console.log(value);
+		}, function (){
+
+		});
+		console.log(creationRequest);
+	}
+
+	$scope.editGroup = function (group) {
+		var shortId;
+		$http.defaults.headers.common['If-match'] = group.gd$etag;
+		shortId = group.id.$t.split('/');
+		shortId = shortId[shortId.length - 1];
+		userGroupsResource.put({user_email: "default", group_id: shortId}, jsonToGdataService.group(group));
+		delete $http.defaults.headers.common['If-match'];
+	}
 	$scope.reloadContacts($scope.filter);
 });
 
