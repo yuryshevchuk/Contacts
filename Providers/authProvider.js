@@ -16,9 +16,9 @@ app.provider("auth", function(){
 		data[key] = value;
 		window.localStorage.setItem(config.storage_key, JSON.stringify(data));
 	};
-	// var clearStorage = function () {
-	// 	window.localStorage.setItem(config.storage_key, JSON.stringify({}));
-	// };
+	var clearStorage = function () {
+		window.localStorage.setItem(config.storage_key, JSON.stringify({}));
+	};
 	var checkToken = function () {
 		return !!get("token");
 	};
@@ -72,14 +72,15 @@ app.provider("auth", function(){
 		this.getUserEmail = function(){
 			return get("user_email");
 		}
+		this.clear = function () {
+			return clearStorage();
+		}
 	}
 	this.$get = function ($http){
 		if (isServiceResponse() && !parseResponse()){
-			// clearStorage();
 			redirect();
 		}
 		if (!checkToken()) {
-			// clearStorage();
 			redirect();
 		}
 		validateToken($http);

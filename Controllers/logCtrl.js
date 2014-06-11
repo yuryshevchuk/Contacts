@@ -1,3 +1,5 @@
-angular.module("app").controller("LogCtrl", function(logout){
-	logout.get();
-});
+angular.module("app").controller("LogCtrl", function ($scope, auth) {
+	$scope.logOut = function () {
+		auth.clear();
+	}
+})

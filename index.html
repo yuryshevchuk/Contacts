@@ -11,6 +11,8 @@
 	<link rel="stylesheet" type="text/css" href="styles/xeditable.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	<script type="text/javascript" src="providers/authProvider.js"></script>
 	<script type="text/javascript" src="components/angular-route.js"></script>
 	<script type="text/javascript" src="components/angular-resource.js"></script>
 	<script type="text/javascript" src="components/ngProgress.js"></script>
@@ -18,8 +20,6 @@
 	<script type="text/javascript" src="components/xeditable.js"></script>
 	<script type="text/javascript" src="filters/filters.js"></script>
 	<script type="text/javascript" src="filters/leaveOnlyId.js"></script>
-	<script type="text/javascript" src="app.js"></script>
-	<script type="text/javascript" src="providers/authProvider.js"></script>
 	<script type="text/javascript" src="config.js"></script>
 	<script type="text/javascript" src="services/jsonToGdata.js"></script>
 	<script type="text/javascript" src="factories/googleResource.js"></script>
@@ -33,6 +33,7 @@
 	<script type="text/javascript" src="directives/pagination/pagination.js"></script>
 	<script type="text/javascript" src="directives/groupNameModal/groupNameModal.js"></script>
 	<script type="text/javascript" src="directives/confirmationModal/confirmationModal.js"></script>
+	<script type="text/javascript" src="directives/scroll/ng-scrollto.js"></script>
 	<script type="text/javascript" src="controllers/logCtrl.js"></script>
 </head>
 <body>
@@ -46,14 +47,14 @@
 	       	<li class="dropdown logMenuSmallRes">
 	       		<a data-toggle="dropdown" class="dropdown-toggle" data-parent="#logMenu" href=""><i class="fa fa-list fa-2x"></i></a>
 	       		<ul class="dropdown-menu" id="section">
-	            	<li><a href="#/loggedout" ng-click="logout.get()">Log Out</a></li>
+	            	<li><a href="https://accounts.google.com/logout" ng-click='logout()'>Log Out</a></li>
 	          	</ul>
 	       	</li>
 
 	        <li class="dropdown disabledOn768width">
 	          <a href="" class="dropdown-toggle" data-toggle="dropdown"><img ng-src="{{user.image?user.image.url:'images/empty50.jpg'}}" class="img-rounded"> {{user.name.givenName}} {{user.name.familyName}}<b class="caret"></b></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="#/loggedout" ng-click="logout.get()">Log Out</a></li>
+	            <li><a href="https://accounts.google.com/logout" ng-controller='LogCtrl' ng-click='logOut()'>Log Out</a></li>
 	          </ul>
 	        </li>
 	      </ul>

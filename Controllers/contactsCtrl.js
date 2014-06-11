@@ -1,4 +1,4 @@
-angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, cfpLoadingBar,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
+angular.module("app").controller("ContactsCtrl", function (auth, jsonToGdataService, cfpLoadingBar,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
 	console.log('fire');
 	$scope.groups = {};
 	$scope.filter = $location.search();
@@ -7,7 +7,6 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 
 
 	userGroupsResource.get({user_email: "default"}, function (groups){
-		$scope.groupStatuses = {};
 		angular.forEach(groups.feed.entry, function(value){
 			$scope.groups[value.id.$t] = value;
 			if (value.gContact$systemGroup) {
@@ -16,7 +15,7 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 		});
 	});
 	
-	$scope.$watch('filter', function(newVal, oldVal){
+	$scope.$watch('filter', function (newVal, oldVal){
 		if ( newVal !== oldVal) {
 			$scope.reloadContacts(newVal);
 			angular.forEach(newVal, function(value, key){
@@ -96,6 +95,7 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
         	$scope.contacts = value;
         	cfpLoadingBar.complete();
         }, function(){
+        	auth.redir();
         }
       );
 	}
@@ -104,7 +104,6 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 		console.log('start deleting contacts....', $scope.selectedContacts);
 		angular.forEach($scope.selectedContacts, function(contact, index){
 			$http.defaults.headers.common['If-match'] = contact.gd$etag;
-			console.log(contact);
 			var userId = contact.id.$t.split('/');
 			userId = userId[userId.length - 1];
 			userContactsResource.delete({user_email: "default", user_id: userId},function(){
@@ -156,11 +155,8 @@ angular.module("app").controller("ContactsCtrl", function (jsonToGdataService, c
 	$scope.createGroup = function (group) {
 		var creationRequest = jsonToGdataService.group(group);
 		userContactsResource.post({user_email: "default"}, creationRequest).$promise.then(function(value){
-			console.log(value);
 		}, function (){
-
 		});
-		console.log(creationRequest);
 	}
 
 	$scope.editGroup = function (group) {

@@ -81,7 +81,7 @@ app.factory('jsonToGdataService', function (){
 				})
 				res += createNode(tagFormat(key), '', tagAttrs)
 			})
-			console.log(res)
+
 			return res;
 		}
 	}
@@ -92,8 +92,6 @@ app.factory('jsonToGdataService', function (){
 	function parser (key, value, parent) {
 		var res ='', tagValue='', tagAttrs='';
 		
-		console.log(key, value, parent);
-
 		if (key == 'link' || key == 'category' || key == 'gd$etag' || key == 'id' || key == 'app$edited' || key == 'updated' || key == 'xmlns' || key == 'xmlns$batch' || key == 'xmlns$gContact' || key == 'xmlns$gd') {
 			return '';
 		};
@@ -109,13 +107,14 @@ app.factory('jsonToGdataService', function (){
 		if (key == 'gd$structuredPostalAddress') {
 			return parsers.postParser(key, value);
 		};
-		if (key == 'gContact$website' || key == 'gContact$userDefinedField') {
+		if (key == 'gContact$website' || key == 'gContact$userDefinedField' || key == 'gContact$groupMembershipInfo') {
 			return parsers.websiteParser(key, value);
 		};
-
+		// if (key == 'gContact$gContact$groupMembershipInfo') {
+		// 	return parsers.membershipParser(key, value);
+		// };
 
 		if (angular.isString(value) && !parent) {
-			console.log('0 parsing string', key, value);
 			res += createNode(tagFormat(key), value);
 		};
 		if (angular.isArray(value) && !parent) {
@@ -126,7 +125,6 @@ app.factory('jsonToGdataService', function (){
 					// 	return '';
 					// };
 					if (tag != "$$hashKey") {
-						console.log('1 parsing array', '', key, value)
 						res += parser(tagFormat(tag), value, key);
 					};
 					
@@ -139,11 +137,9 @@ app.factory('jsonToGdataService', function (){
 		if (angular.isString(value) && parent) {
 			var tagAttrs='';
 			if (key[0] == '$' && key[1] != '$') {
-					console.log('4 parsing string with parent---', parent, value, tagAttrs)
 					res += createNode(tagFormat(parent), value, "");
 				} else if (key[0] != '$' && key[1] != '$'){
 					tagAttrs += ' '+key +'=' +'"' + value +'"';
-					console.log('5 parsing string with parent---', parent, value, tagAttrs)
 					res += createNode(tagFormat(parent), "", tagAttrs);
 				}
 		};
@@ -152,17 +148,14 @@ app.factory('jsonToGdataService', function (){
 			angular.forEach(value, function (tagcontent, tag) {
 				var tagValue ='';
 				var tagAttrs ='';
-				console.log('tagContent --- ',tag, tagcontent)
 				if (!tagcontent) {
 					return '';
 				};
 				if (tag[0] == '$' && tag[1] != '$') {
 					tagValue = tagcontent;
-					console.log('2 parsing obj with parent---', parent, tagValue, tagAttrs)
 					res += createNode(tagFormat(parent), tagValue, tagAttrs);
 				} else if (tag[0] != '$' && tag[1] != '$'){
 					tagAttrs += ' '+tag +'=' +'"' + tagcontent +'"';
-					console.log('2 parsing obj with parent---', parent, tagValue, tagAttrs)
 					res += createNode(tagFormat(parent), tagValue, tagAttrs);
 				}
 			});
@@ -171,15 +164,11 @@ app.factory('jsonToGdataService', function (){
 		if (angular.isObject(value) && !parent) {
 			var parse='';
 			angular.forEach(value, function (value, tag){
-				console.log('3 parsing object---', tag, value, key);
 				if (angular.isObject(value) && angular.isString(tag) && tag.indexOf('gd$') > -1) {
 					parse += parser(tagFormat(tag), value, tagFormat(tag));
-					console.log('MUST WORK', value, parse)
 					// res+=parser(tagFormat(tag), value, key);
 				}
-				
 				if (value && angular.isString(value)) {
-					console.log('0 parsing string', tag, value);
 					res += createNode(tagFormat(key), value);
 				};
 			});
@@ -204,7 +193,6 @@ app.factory('jsonToGdataService', function (){
 			tagValue = '';
 		}
 		var tagstroke='<' + tagName + tagAttrs+'>' + tagValue + '</' + tagName + '>';
-		console.log('TAGstroke :::  ', tagstroke)
 		return tagstroke;
 	}
 
@@ -220,7 +208,6 @@ app.factory('jsonToGdataService', function (){
 				res += parser(key, value);
 			})
 			template = template + res + "</atom:entry>";
-			console.log('template', template)
 			return template;
 		},
 		group: function (group) {
@@ -243,7 +230,6 @@ app.factory('jsonToGdataService', function (){
 	  			'<atom:title type="text">' + group.title.$t + '</atom:title>' +
 				'</atom:entry>'
 			}
-
 			return template;
 		}
 	}

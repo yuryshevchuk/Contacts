@@ -48,8 +48,8 @@ a:hover {
 li.logMenuSmallRes {
 	display: none;
 }
-ul.pagination{
-	margin: 0px;
+.pagination{
+	margin: 8px 0px 0px 0px;
 }
 .pagination>li>a {
 	padding: 1px 8px;
@@ -88,7 +88,6 @@ ul.pagination{
 
 .listHeader{
 	padding-bottom: 15px;
-	height: 30px;
 }
 .listTitle{
 	font-size: 18px;
@@ -105,9 +104,18 @@ ul.pagination{
 }
 .phone{
 	padding-right: 20px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+.email {
+	padding-right: 20px;
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 .groupLabel {
 	margin-right: 14px;
+	display: inline-block;
+	margin-bottom: 4px;
 }
 input.userName{
 	position: relative;
@@ -156,6 +164,7 @@ label.contactInfoLabel{
 	width: 100%;
 	min-height: 150px;
 	resize: none;
+	margin-top: 20px;
 }
 textarea::-webkit-input-placeholder{
 	color: #D4D4D4;
@@ -170,13 +179,6 @@ li.addButton > a{
 	font-size: 21px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	/*border-top: 1px solid #5bc0de;
-	border-left: 1px solid #5bc0de;
-	border-right: 1px solid #5bc0de;*/
-}
-
-li > a.groupName {
-
 }
 li > a.groupCaret {
 	position: absolute;
@@ -239,7 +241,19 @@ div.customPadding {
 textarea:disabled {
 	background-color: #F0FFFF;
 }
-
+div.customFields > span.editable-wrap:nth-child(2) {
+	width: 20%;
+}
+div.customFields > span.editable-wrap:nth-child(4) {
+	width: 55%;
+}
+.contactsTable {
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+.bottomPagination {
+	margin: 50px 0px 50px 0px
+}
 
 
 
@@ -264,6 +278,11 @@ textarea:disabled {
 		display: none;
 	}
 }
+@media screen and (max-width: 991px) {
+	.disabledOn991width {
+		display: none;
+	}
+}
 @media screen and (max-width: 768px) {
 	.disabledOn768width {
 		display: none;
@@ -271,9 +290,7 @@ textarea:disabled {
 	li.disabledOn768width {
 		display: none;
 	}
-	.myPaginate {
-		float: left;
-	}
+	
 	li.logMenuSmallRes {
 		display: block;
 		float: right;
@@ -298,6 +315,13 @@ textarea:disabled {
 	}
 }
 @media screen and (max-width: 576px) {
+	.myPaginate {
+		margin-top: 30px;
+		margin-bottom: 25px;
+	}
+	.pagination>li>a {
+		padding: 10px 15px 10px 15px;
+	}
 	.container-fluid{
 		padding-left: 7px;
 		padding-right: 7px;

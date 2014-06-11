@@ -1,7 +1,6 @@
 <ul class="nav nav-pills">
 	<li ng-click="selectAllContacts()"><a href=""><i class="fa fa-check-square-o"></i></a></li>
 	<li><a href="#/contacts/add"><i class="fa fa-plus"></i></a></li>
-	<!-- <li><a href=""><i class="fa fa-sort-amount-desc"></i></a></li> -->
 	<li confirmation-modal ng-show="isContactsSelected()" title='modalContactsDeleteTitle()' save-callback="deleteContacts"><a href=""><i class="fa fa-trash-o"></i></a></li>
 	<input type="text" class='filterInput' placeholder="filter..." ng-model="filter['q']">
 	<pagination class="myPaginate" direction-links="false" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page='contacts.feed.openSearch$itemsPerPage.$t' ng-model="filter['page']" num-pages="smallnumPages"></pagination>
@@ -23,22 +22,23 @@
 </ul>
 
 <div class="list container-fluid">
-	<div class="listHeader listRow row disabledOn576width">
+	<div class="listHeader container-fluid listRow row disabledOn576width">
 		<div class="col-sm-4 col-xs-5 listTitle">Contact Name:</div>
 		<div class="col-sm-3 col-xs-3 listTitle">E-mail:</div>
 		<div class="col-sm-5 col-xs-4 listTitle">Phone number:</div>
 	</div>
 	<div class="listBody container-fluid" ng-click="$event.stopPropagation()">
 		<div ng-repeat="contact in contacts.feed.entry" class="listRow row">
-			<a class="displayBlock" href="#/contacts/{{contact.id.$t | leaveOnlyId}}" ng-click="$event.stopPropagation()">
+			<a class="displayBlock contactsTable" href="#/contacts/{{contact.id.$t | leaveOnlyId}}" ng-click="$event.stopPropagation()">
 				<div class="listName col-sm-4 col-xs-4"><input class="userName disabledOn576width" id="contact{{contact.id.$t | leaveOnlyId}}" type="checkbox" ng-model="contact.isChecked" ng-change="onSelectContactCallback($index)">{{contact.title.$t}}</div>
-				<div class="listEmail col-sm-3 col-xs-4"><div ng-repeat="email in contact.gd$email">{{email.address}}</div></div>
+				<div class="listEmail col-sm-3 col-xs-4"><div class='email inline-block' ng-repeat="email in contact.gd$email">{{email.address}}</div></div>
 				<div class="listPhone col-sm-3 col-xs-4"><div class="phone inline-block" ng-repeat="phone in contact.gd$phoneNumber">{{phone.$t}}</div></div>
 				<div class="listGroups col-sm-2 disabledOn1080width"><span class="label label-info groupLabel" ng-repeat="group in contact.gContact$groupMembershipInfo">{{getGroupTitle(group.href)}}</span></div>
 			</a>
 		</div>
 	</div>
 </div>
+<pagination scroll-to="" class="myPaginate bottomPagination" direction-links="false" total-items="contacts.feed.openSearch$totalResults.$t" items-per-page='contacts.feed.openSearch$itemsPerPage.$t' ng-model="filter['page']" num-pages="smallnumPages"></pagination>
 
 <!-- 
 <label class="userNameLabel"for="user-name{{$index}}">{{contact.title.$t}}</label> 
