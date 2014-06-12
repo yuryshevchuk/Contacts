@@ -81,7 +81,6 @@ app.factory('jsonToGdataService', function (){
 				})
 				res += createNode(tagFormat(key), '', tagAttrs)
 			})
-
 			return res;
 		}
 	}
@@ -91,8 +90,8 @@ app.factory('jsonToGdataService', function (){
 
 	function parser (key, value, parent) {
 		var res ='', tagValue='', tagAttrs='';
-		
-		if (key == 'link' || key == 'category' || key == 'gd$etag' || key == 'id' || key == 'app$edited' || key == 'updated' || key == 'xmlns' || key == 'xmlns$batch' || key == 'xmlns$gContact' || key == 'xmlns$gd') {
+		var keys = ['link', 'category', 'gd$etag', 'id', 'app$edited', 'updated', 'xmlns', 'xmlns$batch', 'xmlns$gContact', 'xmlns$gd']
+		if (keys.indexOf(key) > -1) {
 			return '';
 		};
 		if (key == 'gd$email') {
@@ -110,9 +109,6 @@ app.factory('jsonToGdataService', function (){
 		if (key == 'gContact$website' || key == 'gContact$userDefinedField' || key == 'gContact$groupMembershipInfo') {
 			return parsers.websiteParser(key, value);
 		};
-		// if (key == 'gContact$gContact$groupMembershipInfo') {
-		// 	return parsers.membershipParser(key, value);
-		// };
 
 		if (angular.isString(value) && !parent) {
 			res += createNode(tagFormat(key), value);

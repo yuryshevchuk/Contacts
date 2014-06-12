@@ -33,28 +33,21 @@ app.controller("detailedContactCtrl", function (auth, $window, $scope, $filter, 
 	$scope.getContact = function () {
 		userContactsResource.get({user_email: "default", user_id: $routeParams.user_id}).$promise.then(
         function(value){
+        	var emptyContact = {
+        		gd$email: [],
+        		gd$phoneNumber: [],
+        		gd$structuredPostalAddress: [],
+        		gContact$website: [],
+        		gContact$userDefinedField: [],
+        		gContact$groupMembershipInfo: [],
+        		gContact$birthday: {
+        			'when': ''
+        		}
+        	};
+        	
+        	value.entry = angular.extend(emptyContact, value.entry);
         	$scope.detailedContact = value;
-        	if (!$scope.detailedContact.entry.gd$email) {
-        		$scope.detailedContact.entry.gd$email = [];
-        	};
-        	if (!$scope.detailedContact.entry.gd$phoneNumber) {
-        		$scope.detailedContact.entry.gd$phoneNumber = [];
-        	};
-        	if (!$scope.detailedContact.entry.gd$structuredPostalAddress) {
-        		$scope.detailedContact.entry.gd$structuredPostalAddress = [];
-        	};
-        	if (!$scope.detailedContact.entry.gContact$website) {
-        		$scope.detailedContact.entry.gContact$website = [];
-        	};
-        	if (!$scope.detailedContact.entry.gContact$userDefinedField) {
-        		$scope.detailedContact.entry.gContact$userDefinedField = [];
-        	};
-        	if (!$scope.detailedContact.entry.gContact$groupMembershipInfo) {
-        		$scope.detailedContact.entry.gContact$groupMembershipInfo = [];
-        	};
-        	if (!$scope.detailedContact.entry.gContact$birthday) {
-        		$scope.detailedContact.entry.gContact$birthday = {'when': ''};
-        	};
+        	console.log($scope.detailedContact)
 
 			$scope.modalContactDeleteTitle = function () {
 				if ($scope.detailedContact && $scope.detailedContact.entry.gd$name.gd$givenName) {
@@ -126,18 +119,8 @@ app.controller("detailedContactCtrl", function (auth, $window, $scope, $filter, 
 		$window.history.back()
 	}
 
-	$scope.updateTime = function () {
-		if ($scope.detailedContact && $scope.detailedContact.entry.updated) {
-			var timeArr = $scope.detailedContact.entry.updated.$t.split('T');
-			var clock = timeArr[1].split('.')
-			return timeArr[0] + ' at ' + clock[0];
-		} else {
-			return '';
-		}
-	}
-
 	if ($routeParams.user_id == 'add') {
-	
+
 		$scope.$watch("editableForm", function (newVal, oldVal){
 			if (newVal) {
 				newVal.$show();
@@ -168,8 +151,6 @@ app.controller("detailedContactCtrl", function (auth, $window, $scope, $filter, 
 	} else {
 		$scope.saveContact = $scope.saveEditedContact
 		$scope.getContact();
-		$scope.contactPhoto = userPhotoResource.get({user_email: "default", user_id: $routeParams.user_id})
+		// $scope.contactPhoto = userPhotoResource.get({user_email: "default", user_id: $routeParams.user_id})
 	};
-
-	
 })

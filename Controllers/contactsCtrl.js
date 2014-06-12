@@ -126,6 +126,3 @@ angular.module("app").controller("ContactsCtrl", function (auth, jsonToGdataServ
 	}
 	$scope.reloadContacts($scope.filter);
 });
-
-
-// testContact1, testContact2, testContact3, testContact4, testContact5, testContact6, testContact7, testContact8, testContact9, testContact10
