@@ -109,7 +109,7 @@
 						<div ng-show="editableForm.$visible" class="row">
 							<div class="col-md-6">
 								<p class="input-group">
-									<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="birthDate" is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+									<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="birthDate" is-open="opened" show-weeks="false" datepicker-options="dateOptions" show-button-bar='false' close-text="Close" />
 									<span class="input-group-btn">
 										<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 									</span>
