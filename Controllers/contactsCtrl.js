@@ -1,5 +1,6 @@
-angular.module("app").controller("ContactsCtrl", function (auth, jsonToGdataService, cfpLoadingBar,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage, ngProgress){
-	console.log('fire');
+'use strict';
+angular.module("app").controller("ContactsCtrl", function (auth, jsonToGdataService, cfpLoadingBar,$http, $scope, $location, userContactsResource, userGroupsResource, $routeParams, $rootScope, numberOfNotesOnThePage){
+
 	$scope.groups = {};
 	$scope.filter = $location.search();
 	$scope.selectedContacts = {};
@@ -25,65 +26,24 @@ angular.module("app").controller("ContactsCtrl", function (auth, jsonToGdataServ
 		}
 	}, true);
 
-	// var message = jsonToGdataService.contact({ 
-	// "gd$name": {
- //     "gd$fullName": {
- //      "$t": "TestNewContact"
- //     },
- //     "gd$givenName": {
- //      "$t": "TestNewContact"
- //     }
- //    },
- //    "gd$email": [
- //     {
- //      "address": "testNewContactMail@gmail.com",
- //      "primary": "true",
- //      "rel": "http://schemas.google.com/g/2005#home"
- //     }
- //    ],
- //    "gd$phoneNumber": [
- //     {
- //      "rel": "http://schemas.google.com/g/2005#home",
- //      "uri": "tel:+380-99-999-9991",
- //      "$t": "+380999999991"
- //     },
- //     {
- //      "rel": "http://schemas.google.com/g/2005#mobile",
- //      "$t": "091-111-4444"
- //     }
- //    ]
- // });
-
-
-
-
-
-	// userContactsResource.post({user_email: "default"}, message).$promise.then(
- //        function(){
- //        }, function(value){
- //        	console.log(value)
- //        }
- //      );
-
-
-	
-
-	$rootScope.getGroupTitle = function(groupId) {
+	$scope.getGroupTitle = function(groupId) {
 		return $scope.groups[groupId]?$scope.groups[groupId].title.$t:'';
-	}
+	};
+
 	$scope.filterByGroup = function (key){
 		$scope.filter.page = 1;
 		$scope.filter.group = key;
-	}
+	};
+
 	$scope.onSelectContactCallback = function(index){
 		var contact = $scope.contacts.feed.entry[index];
 		if (contact.isChecked) {
 			$scope.selectedContacts[index] = contact;
 		} else {
 			delete $scope.selectedContacts[index];
-			//$scope.selectedContacts = $scope.selectedContacts.filter(function(item){return item != contact.id.$t});
 		}
-	}
+	};
+
 	$scope.reloadContacts = function (newVal){
 		$scope.selectedContacts = {};
 		cfpLoadingBar.start();
@@ -94,11 +54,8 @@ angular.module("app").controller("ContactsCtrl", function (auth, jsonToGdataServ
         function(value){
         	$scope.contacts = value;
         	cfpLoadingBar.complete();
-        }, function(){
-        	auth.redir();
-        }
-      );
-	}
+        });
+	};
 
 	$scope.deleteContacts = function () {
 		console.log('start deleting contacts....', $scope.selectedContacts);
@@ -112,9 +69,9 @@ angular.module("app").controller("ContactsCtrl", function (auth, jsonToGdataServ
 				if (!Object.keys($scope.selectedContacts).length)
 					$scope.reloadContacts($scope.filter);
 			});
-		})
+		});
 			delete $http.defaults.headers.common['If-match'];
-	}
+	};
 
 	$scope.deleteGroup = function (group) {
 		var shortId;

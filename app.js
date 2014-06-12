@@ -1,6 +1,6 @@
-var app = angular.module("app", ["ngRoute", "ngResource", "ngProgress", 'angular-loading-bar', "xeditable", "filters", "ui.bootstrap", "ngScrollTo"]);
+var app = angular.module("app", ["ngRoute", "ngResource", 'angular-loading-bar', "xeditable", "filters", "ui.bootstrap", "ngScrollTo"]);
 
-app.run(function(auth, cfpLoadingBar, $http, $rootScope, googleUserResource, ngProgress, editableOptions, editableThemes){
+app.run(function(auth, cfpLoadingBar, $http, $rootScope, googleUserResource, editableOptions, editableThemes){
 	editableOptions.theme = 'bs3';
 	editableThemes.bs3.inputClass = 'input-sm';
 	editableThemes.bs3.buttonsClass = 'btn-sm';

@@ -10,7 +10,7 @@ app.config(function($routeProvider, $resourceProvider, authProvider, $httpProvid
 		reloadOnSearch: false
 	})
 	.when("/contacts/:user_id", {
-		templateUrl: "views/contacts/detailed.html",
+		templateUrl: "views/detailedContact/detailed.html",
 		controller: "detailedContactCtrl"
 	})
 	.otherwise({

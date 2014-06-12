@@ -12,11 +12,6 @@ a:hover {
 	padding: 30px;
 	font-size: 24px;
 }
-/*#fixed {
-    height: 600px;
-    overflow: auto;
-    border: 1px solid blue;
-}*/
 .inline-block{
 	display: inline-block;
 }
@@ -151,11 +146,9 @@ input[type=text].filterInput{
 .segment:last-child{
 	border-bottom: none;
 }
-label.contactInfoLabel{
-
-	margin-right: 20px;
-	font-weight: 400;
-	padding: 12px 0px 0px 0px;
+.contactInfoLabel{
+	padding: 7px 0px 7px 0px;
+	font-weight: 700;
 }
 .contactInfo{
 	width: 100%;
@@ -164,7 +157,7 @@ label.contactInfoLabel{
 	width: 100%;
 	min-height: 150px;
 	resize: none;
-	margin-top: 20px;
+	margin-top: 15px;
 }
 textarea::-webkit-input-placeholder{
 	color: #D4D4D4;
@@ -173,7 +166,7 @@ textarea::-webkit-input-placeholder{
 	padding-bottom: 50px;
 }
 .contactInfoFields{
-	padding-top: 10px;
+	margin: 7px 0px 7px 0px;
 }
 li.addButton > a{
 	font-size: 21px;
@@ -230,7 +223,7 @@ p.addInfoLabels {
 	margin-left: 10px;
 }
 span.editable-wrap {
-	width: 75%;
+	width: 85%;
 }
 .infoFieldTrash {
 	margin-left: 15px;
@@ -239,14 +232,14 @@ div.customPadding {
 	padding-left: 4px;
 }
 textarea:disabled {
-	background-color: #F0FFFF;
+	background-color: #f8f8f8;
 }
-div.customFields > span.editable-wrap:nth-child(2) {
+/*div.customFields > span.editable-wrap:nth-child(2) {
 	width: 20%;
 }
 div.customFields > span.editable-wrap:nth-child(4) {
 	width: 55%;
-}
+}*/
 .contactsTable {
 	padding-top: 7px;
 	padding-bottom: 7px;
@@ -254,8 +247,33 @@ div.customFields > span.editable-wrap:nth-child(4) {
 .bottomPagination {
 	margin: 50px 0px 50px 0px
 }
-
-
+.phoneInfoFields > span.editable-wrap{
+	width: 40%;
+}
+.contactInfoLabel > label {
+	margin-right: 7px;
+}
+.contactInfoGroups {
+	margin: 7px 10px 7px 0px;
+}
+select.form-control {
+	width: 40%;
+	display: inline-block;
+}
+input[name='email'] {
+	width: 85%;
+	display: inline-block;
+}
+input[name='phone'] {
+	width: 85%;
+	display: inline-block;
+}
+input[name='title'] {
+	width: 87%;
+}
+input.ng-invalid {
+	border-color: red;
+}
 
 
 
